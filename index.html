@@ -1,0 +1,902 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>MR ToolIAA — Agentes IA como Servicio para tu negocio</title>
+  <meta name="description" content="Automatizamos los procesos repetitivos de tu empresa con agentes de inteligencia artificial. Implementación en días, soporte en español, enfocados en República Dominicana y LATAM." />
+  <meta name="keywords" content="agentes IA, automatización empresarial, inteligencia artificial RD, WhatsApp bot, automatización dominicana, MR ToolIAA" />
+  <meta property="og:title" content="MR ToolIAA — Agentes IA como Servicio" />
+  <meta property="og:description" content="Automatizamos lo repetitivo para que te enfoques en crecer. Agentes IA especializados para clínicas, ferreterías y cualquier negocio en RD." />
+  <meta property="og:type" content="website" />
+  <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>🤖</text></svg>" />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&display=swap" rel="stylesheet" />
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script>
+    tailwind.config = {
+      theme: {
+        extend: {
+          colors: {
+            navy: {
+              50:  '#e8eef5',
+              100: '#c5d5e8',
+              500: '#1e3a5f',
+              600: '#182f4e',
+              700: '#12233c',
+              800: '#0d1a2d',
+            },
+            brand: {
+              400: '#fb923c',
+              500: '#f97316',
+              600: '#ea6a08',
+            }
+          },
+          fontFamily: {
+            sans: ['Inter', 'sans-serif'],
+          }
+        }
+      }
+    }
+  </script>
+  <style>
+    html { scroll-behavior: smooth; }
+    .gradient-hero {
+      background: linear-gradient(135deg, #0d1a2d 0%, #1e3a5f 55%, #2a5298 100%);
+    }
+    .gradient-cta {
+      background: linear-gradient(135deg, #f97316 0%, #ea580c 100%);
+    }
+    .gradient-section {
+      background: linear-gradient(180deg, #f8fafc 0%, #f1f5f9 100%);
+    }
+    .card-hover {
+      transition: transform 0.2s ease, box-shadow 0.2s ease;
+    }
+    .card-hover:hover {
+      transform: translateY(-4px);
+      box-shadow: 0 20px 40px rgba(0,0,0,0.12);
+    }
+    .nav-scrolled {
+      background: rgba(14, 26, 45, 0.97) !important;
+      backdrop-filter: blur(12px);
+      box-shadow: 0 2px 20px rgba(0,0,0,0.3);
+    }
+    .step-line::after {
+      content: '';
+      position: absolute;
+      top: 50%;
+      left: 100%;
+      width: 100%;
+      height: 2px;
+      background: linear-gradient(90deg, #f97316, #fb923c44);
+      transform: translateY(-50%);
+    }
+    @media (max-width: 768px) {
+      .step-line::after { display: none; }
+    }
+    .badge-pulse {
+      animation: pulse 2s infinite;
+    }
+    @keyframes pulse {
+      0%, 100% { opacity: 1; }
+      50% { opacity: 0.7; }
+    }
+    .float-btn {
+      animation: float 3s ease-in-out infinite;
+    }
+    @keyframes float {
+      0%, 100% { transform: translateY(0); }
+      50% { transform: translateY(-5px); }
+    }
+    .product-card-active {
+      border-color: #f97316;
+      box-shadow: 0 0 0 2px #f9731622, 0 16px 32px rgba(249,115,22,0.12);
+    }
+    .testimonial-card {
+      border-left: 4px solid #f97316;
+    }
+    .pricing-popular {
+      position: relative;
+      transform: scale(1.05);
+      border: 2px solid #f97316;
+    }
+    .pricing-popular::before {
+      content: 'MÁS POPULAR';
+      position: absolute;
+      top: -14px;
+      left: 50%;
+      transform: translateX(-50%);
+      background: #f97316;
+      color: white;
+      font-size: 11px;
+      font-weight: 800;
+      letter-spacing: 1px;
+      padding: 3px 14px;
+      border-radius: 20px;
+      white-space: nowrap;
+    }
+    .fa-check-mark::before { content: '✓'; }
+    details summary { cursor: pointer; list-style: none; }
+    details summary::-webkit-details-marker { display: none; }
+    details[open] .faq-icon { transform: rotate(45deg); }
+    .faq-icon { transition: transform 0.2s ease; }
+  </style>
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "Organization",
+    "name": "MR ToolIAA",
+    "description": "Agentes IA como Servicio para empresas en República Dominicana y LATAM",
+    "url": "https://mrtooliaa.com",
+    "contactPoint": {
+      "@type": "ContactPoint",
+      "telephone": "+1-809-000-0000",
+      "contactType": "customer service",
+      "availableLanguage": "Spanish"
+    },
+    "areaServed": ["DO", "LATAM"],
+    "knowsAbout": ["Inteligencia Artificial", "Automatización", "WhatsApp Bots", "Agentes IA"]
+  }
+  </script>
+</head>
+<body class="font-sans text-gray-900 antialiased overflow-x-hidden">
+
+  <!-- ======================================================
+       NAVBAR
+  ======================================================= -->
+  <nav id="navbar" class="fixed top-0 left-0 right-0 z-50 transition-all duration-300" style="background: transparent;">
+    <div class="max-w-6xl mx-auto px-4 sm:px-6 py-4 flex items-center justify-between">
+      <a href="#" class="flex items-center gap-2">
+        <img src="/assets/logo_mrtooliaa.png" alt="MR ToolIAA" class="h-9 w-auto" style="max-height:36px;">
+      </a>
+      <div class="hidden md:flex items-center gap-8">
+        <a href="#solution" class="text-white/80 hover:text-white text-sm font-medium transition-colors">Soluciones</a>
+        <a href="#products" class="text-white/80 hover:text-white text-sm font-medium transition-colors">Productos</a>
+        <a href="#how" class="text-white/80 hover:text-white text-sm font-medium transition-colors">Cómo funciona</a>
+        <a href="#pricing" class="text-white/80 hover:text-white text-sm font-medium transition-colors">Precios</a>
+        <a href="https://wa.me/18090000000" target="_blank"
+           class="bg-brand-500 hover:bg-brand-600 text-white text-sm font-bold px-5 py-2.5 rounded-full transition-colors shadow-lg shadow-orange-500/20">
+          Hablar con un experto
+        </a>
+      </div>
+      <a href="https://wa.me/18090000000" target="_blank"
+         class="md:hidden bg-brand-500 text-white text-sm font-bold px-4 py-2 rounded-full">
+        Contactar
+      </a>
+    </div>
+  </nav>
+  <script>
+    window.addEventListener('scroll', () => {
+      const nav = document.getElementById('navbar');
+      if (window.scrollY > 60) nav.classList.add('nav-scrolled');
+      else nav.classList.remove('nav-scrolled');
+    });
+  </script>
+
+  <!-- ======================================================
+       HERO
+  ======================================================= -->
+  <section class="gradient-hero min-h-screen flex items-center pt-20 pb-16 relative overflow-hidden">
+    <!-- Background decoration -->
+    <div class="absolute inset-0 overflow-hidden pointer-events-none">
+      <div class="absolute top-20 right-0 w-96 h-96 bg-brand-500/10 rounded-full blur-3xl"></div>
+      <div class="absolute bottom-0 left-0 w-80 h-80 bg-blue-500/10 rounded-full blur-3xl"></div>
+      <div class="absolute top-1/2 left-1/4 w-64 h-64 bg-white/3 rounded-full blur-2xl"></div>
+    </div>
+
+    <div class="max-w-6xl mx-auto px-4 sm:px-6 w-full relative z-10">
+      <div class="grid lg:grid-cols-2 gap-16 items-center">
+        <!-- Left: Copy -->
+        <div>
+          <div class="inline-flex items-center gap-2 bg-brand-500/20 border border-brand-500/30 rounded-full px-4 py-1.5 mb-6">
+            <span class="w-2 h-2 bg-brand-400 rounded-full badge-pulse"></span>
+            <span class="text-brand-400 text-sm font-semibold">Agentes IA como Servicio · RD y LATAM</span>
+          </div>
+
+          <h1 class="text-4xl sm:text-5xl lg:text-6xl font-black text-white leading-tight mb-6">
+            Agentes IA<br/>
+            <span class="text-brand-500">como Servicio</span><br/>
+            para tu negocio
+          </h1>
+
+          <p class="text-white/70 text-lg sm:text-xl leading-relaxed mb-8 max-w-lg">
+            Automatizamos lo repetitivo para que te enfoques en crecer.
+            Agentes especializados integrados en WhatsApp, tu sistema y tus procesos — listos en días, no meses.
+          </p>
+
+          <div class="flex flex-wrap gap-4 mb-10">
+            <a href="#products"
+               class="gradient-cta text-white font-bold px-8 py-4 rounded-full text-lg shadow-xl shadow-orange-500/30 hover:shadow-orange-500/50 transition-shadow">
+              Ver soluciones →
+            </a>
+            <a href="https://wa.me/18090000000" target="_blank"
+               class="border border-white/30 text-white font-semibold px-8 py-4 rounded-full text-lg hover:bg-white/10 transition-colors">
+              Hablar con un experto
+            </a>
+          </div>
+
+          <!-- Stats -->
+          <div class="grid grid-cols-3 gap-6 border-t border-white/10 pt-8">
+            <div>
+              <div class="text-3xl font-black text-white">24/7</div>
+              <div class="text-white/50 text-sm mt-1">Disponibilidad</div>
+            </div>
+            <div>
+              <div class="text-3xl font-black text-brand-500">Días</div>
+              <div class="text-white/50 text-sm mt-1">Tiempo de impl.</div>
+            </div>
+            <div>
+              <div class="text-3xl font-black text-white">100%</div>
+              <div class="text-white/50 text-sm mt-1">en Español</div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Right: Visual -->
+        <div class="hidden lg:block relative">
+          <!-- Main card -->
+          <div class="bg-white/10 backdrop-blur-sm border border-white/20 rounded-2xl p-6 shadow-2xl">
+            <div class="flex items-center gap-3 mb-5 pb-4 border-b border-white/10">
+              <div class="w-10 h-10 bg-brand-500 rounded-xl flex items-center justify-center text-xl">🤖</div>
+              <div>
+                <div class="text-white font-bold">Arsenal MR ToolIAA</div>
+                <div class="text-white/50 text-sm">13 agentes activos</div>
+              </div>
+              <div class="ml-auto flex items-center gap-1.5">
+                <span class="w-2 h-2 bg-green-400 rounded-full badge-pulse"></span>
+                <span class="text-green-400 text-xs font-medium">En línea</span>
+              </div>
+            </div>
+
+            <div class="space-y-3">
+              <div class="flex items-center gap-3 bg-white/5 rounded-xl p-3">
+                <span class="text-2xl">🏥</span>
+                <div class="flex-1">
+                  <div class="text-white text-sm font-semibold">MediTurno IA</div>
+                  <div class="text-white/50 text-xs">Clínicas · Agendamiento WhatsApp</div>
+                </div>
+                <span class="bg-green-500/20 text-green-400 text-xs font-bold px-2.5 py-1 rounded-full">ACTIVO</span>
+              </div>
+              <div class="flex items-center gap-3 bg-white/5 rounded-xl p-3">
+                <span class="text-2xl">🔩</span>
+                <div class="flex-1">
+                  <div class="text-white text-sm font-semibold">Ferret-Quote Bot</div>
+                  <div class="text-white/50 text-xs">Ferreterías · Cotizaciones PDF</div>
+                </div>
+                <span class="bg-green-500/20 text-green-400 text-xs font-bold px-2.5 py-1 rounded-full">ACTIVO</span>
+              </div>
+              <div class="flex items-center gap-3 bg-white/5 rounded-xl p-3">
+                <span class="text-2xl">🤖</span>
+                <div class="flex-1">
+                  <div class="text-white text-sm font-semibold">Agente Custom</div>
+                  <div class="text-white/50 text-xs">Tu proceso · A la medida</div>
+                </div>
+                <span class="bg-brand-500/20 text-brand-400 text-xs font-bold px-2.5 py-1 rounded-full">SOLICITAR</span>
+              </div>
+            </div>
+
+            <div class="mt-5 pt-4 border-t border-white/10 grid grid-cols-3 gap-3 text-center">
+              <div class="bg-white/5 rounded-lg p-2.5">
+                <div class="text-white font-bold text-lg">0</div>
+                <div class="text-white/40 text-xs">Tareas fallidas</div>
+              </div>
+              <div class="bg-white/5 rounded-lg p-2.5">
+                <div class="text-brand-500 font-bold text-lg">∞</div>
+                <div class="text-white/40 text-xs">Escalabilidad</div>
+              </div>
+              <div class="bg-white/5 rounded-lg p-2.5">
+                <div class="text-white font-bold text-lg">RD</div>
+                <div class="text-white/40 text-xs">Localizado</div>
+              </div>
+            </div>
+          </div>
+
+          <!-- Floating notification -->
+          <div class="absolute -bottom-4 -left-8 bg-white rounded-2xl shadow-2xl p-4 flex items-center gap-3 w-64 float-btn">
+            <span class="text-2xl">✅</span>
+            <div>
+              <div class="text-sm font-bold text-gray-900">Cita confirmada</div>
+              <div class="text-xs text-gray-500">Paciente · Dr. Rodríguez · 3pm</div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ======================================================
+       PROBLEMA / SOLUCIÓN
+  ======================================================= -->
+  <section id="solution" class="py-20 bg-white">
+    <div class="max-w-6xl mx-auto px-4 sm:px-6">
+
+      <div class="text-center mb-14">
+        <span class="text-brand-500 font-bold text-sm uppercase tracking-wider">El problema</span>
+        <h2 class="text-3xl sm:text-4xl font-black text-navy-500 mt-2 mb-4">
+          Tu equipo merece hacer trabajo que <span class="text-brand-500">importa</span>
+        </h2>
+        <p class="text-gray-500 text-lg max-w-2xl mx-auto">
+          Las horas que tu equipo gasta en tareas repetitivas son horas que no invierte en crecer tu negocio.
+        </p>
+      </div>
+
+      <div class="grid md:grid-cols-3 gap-8">
+        <!-- Pain -->
+        <div class="text-center p-8 rounded-2xl bg-red-50 border border-red-100 card-hover">
+          <div class="w-16 h-16 bg-red-100 rounded-2xl flex items-center justify-center text-3xl mx-auto mb-5">⏰</div>
+          <h3 class="text-xl font-bold text-gray-900 mb-3">Tu equipo pierde horas</h3>
+          <p class="text-gray-500 leading-relaxed">
+            Responder mensajes, agendar citas, buscar precios, generar cotizaciones — tareas manuales que se repiten cientos de veces al mes.
+          </p>
+          <div class="mt-4 inline-flex items-center gap-1.5 bg-red-100 text-red-600 text-xs font-bold px-3 py-1.5 rounded-full">
+            ❌ Problema actual
+          </div>
+        </div>
+
+        <!-- Bridge -->
+        <div class="text-center p-8 rounded-2xl bg-navy-500 text-white card-hover">
+          <div class="w-16 h-16 bg-white/20 rounded-2xl flex items-center justify-center text-3xl mx-auto mb-5">🤖</div>
+          <h3 class="text-xl font-bold mb-3">Nuestros agentes IA</h3>
+          <p class="text-white/75 leading-relaxed">
+            Ejecutan esas tareas automáticamente, 24 horas al día, 7 días a la semana, sin errores, sin descanso, sin excusas.
+          </p>
+          <div class="mt-4 inline-flex items-center gap-1.5 bg-brand-500 text-white text-xs font-bold px-3 py-1.5 rounded-full">
+            → La solución
+          </div>
+        </div>
+
+        <!-- Result -->
+        <div class="text-center p-8 rounded-2xl bg-green-50 border border-green-100 card-hover">
+          <div class="w-16 h-16 bg-green-100 rounded-2xl flex items-center justify-center text-3xl mx-auto mb-5">🎯</div>
+          <h3 class="text-xl font-bold text-gray-900 mb-3">Tú te enfocas en crecer</h3>
+          <p class="text-gray-500 leading-relaxed">
+            Tu equipo se libera de lo repetitivo y puede invertir su tiempo en ventas, servicio al cliente y decisiones estratégicas.
+          </p>
+          <div class="mt-4 inline-flex items-center gap-1.5 bg-green-100 text-green-700 text-xs font-bold px-3 py-1.5 rounded-full">
+            ✅ Resultado
+          </div>
+        </div>
+      </div>
+
+      <!-- ROI callout -->
+      <div class="mt-12 bg-navy-500 rounded-2xl p-8 flex flex-col md:flex-row items-center justify-between gap-6">
+        <div>
+          <h3 class="text-white text-xl font-bold mb-1">¿Cuánto vale recuperar 20 horas/semana de tu equipo?</h3>
+          <p class="text-white/60">Nuestros clientes reportan ahorros de 15-40 horas semanales al implementar su primer agente IA.</p>
+        </div>
+        <a href="https://wa.me/18090000000" target="_blank"
+           class="whitespace-nowrap gradient-cta text-white font-bold px-8 py-4 rounded-full shadow-lg hover:shadow-xl transition-shadow">
+          Calcular mi ROI →
+        </a>
+      </div>
+    </div>
+  </section>
+
+  <!-- ======================================================
+       PRODUCTOS
+  ======================================================= -->
+  <section id="products" class="py-20 gradient-section">
+    <div class="max-w-6xl mx-auto px-4 sm:px-6">
+
+      <div class="text-center mb-14">
+        <span class="text-brand-500 font-bold text-sm uppercase tracking-wider">Productos</span>
+        <h2 class="text-3xl sm:text-4xl font-black text-navy-500 mt-2 mb-4">
+          Un Arsenal de agentes, <span class="text-brand-500">un solo socio</span>
+        </h2>
+        <p class="text-gray-500 text-lg max-w-2xl mx-auto">
+          Cada producto es una instancia especializada del mismo concepto: automatización inteligente para un sector específico.
+        </p>
+      </div>
+
+      <div class="grid md:grid-cols-3 gap-8">
+
+        <!-- MediTurno -->
+        <div class="bg-white rounded-2xl p-8 card-hover product-card-active shadow-lg">
+          <div class="w-16 h-16 bg-blue-50 rounded-2xl flex items-center justify-center text-3xl mb-6">🏥</div>
+          <div class="inline-flex items-center gap-1.5 bg-blue-100 text-blue-700 text-xs font-bold px-3 py-1 rounded-full mb-4">
+            Para Clínicas
+          </div>
+          <h3 class="text-2xl font-black text-navy-500 mb-3">MediTurno IA</h3>
+          <p class="text-gray-500 leading-relaxed mb-6">
+            Agendamiento inteligente para clínicas vía WhatsApp. Sin app, sin web — solo WhatsApp. Tu recepcionista virtual que trabaja 24/7.
+          </p>
+          <ul class="space-y-2 mb-8 text-sm text-gray-600">
+            <li class="flex items-center gap-2"><span class="text-green-500 font-bold">✓</span> Agenda y confirma citas automáticamente</li>
+            <li class="flex items-center gap-2"><span class="text-green-500 font-bold">✓</span> Reduce no-shows con recordatorios</li>
+            <li class="flex items-center gap-2"><span class="text-green-500 font-bold">✓</span> Múltiples doctores y especialidades</li>
+            <li class="flex items-center gap-2"><span class="text-green-500 font-bold">✓</span> Integración con tu calendario actual</li>
+          </ul>
+          <a href="/mediturno" class="block text-center bg-navy-500 hover:bg-navy-600 text-white font-bold py-3 rounded-xl transition-colors">
+            Conocer MediTurno →
+          </a>
+        </div>
+
+        <!-- Ferret-Quote -->
+        <div class="bg-white rounded-2xl p-8 card-hover shadow-md border border-gray-100">
+          <div class="w-16 h-16 bg-orange-50 rounded-2xl flex items-center justify-center text-3xl mb-6">🔩</div>
+          <div class="inline-flex items-center gap-1.5 bg-orange-100 text-orange-700 text-xs font-bold px-3 py-1 rounded-full mb-4">
+            Para Ferreterías
+          </div>
+          <h3 class="text-2xl font-black text-navy-500 mb-3">Ferret-Quote Bot</h3>
+          <p class="text-gray-500 leading-relaxed mb-6">
+            Cotizaciones instantáneas para ferreterías por WhatsApp. Tu cliente pregunta el precio, el bot cotiza en segundos con PDF profesional.
+          </p>
+          <ul class="space-y-2 mb-8 text-sm text-gray-600">
+            <li class="flex items-center gap-2"><span class="text-green-500 font-bold">✓</span> Cotiza desde tu inventario en tiempo real</li>
+            <li class="flex items-center gap-2"><span class="text-green-500 font-bold">✓</span> Genera PDF con logo y precios</li>
+            <li class="flex items-center gap-2"><span class="text-green-500 font-bold">✓</span> Alertas al dueño por cada cotización</li>
+            <li class="flex items-center gap-2"><span class="text-green-500 font-bold">✓</span> Sincroniza con Excel o tu sistema</li>
+          </ul>
+          <a href="/ferretquote" class="block text-center bg-brand-500 hover:bg-brand-600 text-white font-bold py-3 rounded-xl transition-colors">
+            Conocer Ferret-Quote →
+          </a>
+        </div>
+
+        <!-- Custom -->
+        <div class="bg-navy-500 rounded-2xl p-8 card-hover shadow-md text-white">
+          <div class="w-16 h-16 bg-white/15 rounded-2xl flex items-center justify-center text-3xl mb-6">🤖</div>
+          <div class="inline-flex items-center gap-1.5 bg-white/20 text-white text-xs font-bold px-3 py-1 rounded-full mb-4">
+            A la medida
+          </div>
+          <h3 class="text-2xl font-black mb-3">Agente IA Custom</h3>
+          <p class="text-white/70 leading-relaxed mb-6">
+            ¿Tu negocio tiene procesos repetitivos únicos? Diseñamos e implementamos un agente IA completamente personalizado para ti.
+          </p>
+          <ul class="space-y-2 mb-8 text-sm text-white/80">
+            <li class="flex items-center gap-2"><span class="text-brand-400 font-bold">✓</span> Análisis de tus procesos actuales</li>
+            <li class="flex items-center gap-2"><span class="text-brand-400 font-bold">✓</span> Diseño a medida de tu operación</li>
+            <li class="flex items-center gap-2"><span class="text-brand-400 font-bold">✓</span> Integración con tus sistemas</li>
+            <li class="flex items-center gap-2"><span class="text-brand-400 font-bold">✓</span> Soporte continuo en español</li>
+          </ul>
+          <a href="https://wa.me/18090000000" target="_blank"
+             class="block text-center gradient-cta text-white font-bold py-3 rounded-xl transition-opacity hover:opacity-90">
+            Solicitar consulta →
+          </a>
+        </div>
+
+      </div>
+    </div>
+  </section>
+
+  <!-- ======================================================
+       CÓMO FUNCIONA
+  ======================================================= -->
+  <section id="how" class="py-20 bg-white">
+    <div class="max-w-6xl mx-auto px-4 sm:px-6">
+
+      <div class="text-center mb-14">
+        <span class="text-brand-500 font-bold text-sm uppercase tracking-wider">Proceso</span>
+        <h2 class="text-3xl sm:text-4xl font-black text-navy-500 mt-2 mb-4">
+          De idea a producción en <span class="text-brand-500">3 pasos</span>
+        </h2>
+        <p class="text-gray-500 text-lg max-w-2xl mx-auto">
+          Sin meses de desarrollo, sin contratos complicados, sin departamento de IT. Solo resultados.
+        </p>
+      </div>
+
+      <div class="grid md:grid-cols-3 gap-8 relative mb-16">
+        <div class="text-center relative">
+          <div class="w-20 h-20 bg-brand-500 rounded-2xl flex items-center justify-center text-3xl mx-auto mb-6 shadow-lg shadow-orange-200 relative z-10">
+            💬
+          </div>
+          <div class="absolute top-10 left-1/2 w-full h-0.5 bg-gradient-to-r from-brand-500 to-brand-200 hidden md:block -z-0"></div>
+          <span class="inline-block bg-navy-500 text-white text-xs font-black px-3 py-1 rounded-full mb-3">PASO 1</span>
+          <h3 class="text-xl font-bold text-navy-500 mb-3">Nos cuentas tu proceso</h3>
+          <p class="text-gray-500 leading-relaxed">
+            Una sesión de 30 minutos donde nos explicas qué tareas quieres automatizar y cómo funciona tu negocio actualmente.
+          </p>
+        </div>
+
+        <div class="text-center relative">
+          <div class="w-20 h-20 bg-navy-500 rounded-2xl flex items-center justify-center text-3xl mx-auto mb-6 shadow-lg shadow-blue-200 relative z-10">
+            ⚙️
+          </div>
+          <div class="absolute top-10 left-1/2 w-full h-0.5 bg-gradient-to-r from-navy-500 to-navy-200 hidden md:block -z-0"></div>
+          <span class="inline-block bg-brand-500 text-white text-xs font-black px-3 py-1 rounded-full mb-3">PASO 2</span>
+          <h3 class="text-xl font-bold text-navy-500 mb-3">Diseñamos tu agente IA</h3>
+          <p class="text-gray-500 leading-relaxed">
+            Nuestro equipo configura y personaliza el agente para tu industria, tu inventario, tu horario y tus reglas de negocio.
+          </p>
+        </div>
+
+        <div class="text-center">
+          <div class="w-20 h-20 bg-green-500 rounded-2xl flex items-center justify-center text-3xl mx-auto mb-6 shadow-lg shadow-green-200">
+            🚀
+          </div>
+          <span class="inline-block bg-green-500 text-white text-xs font-black px-3 py-1 rounded-full mb-3">PASO 3</span>
+          <h3 class="text-xl font-bold text-navy-500 mb-3">Lo desplegamos en tu negocio</h3>
+          <p class="text-gray-500 leading-relaxed">
+            Conectamos el agente a tu WhatsApp o sistema existente. Tu equipo recibe capacitación. Empiezan las automatizaciones.
+          </p>
+        </div>
+      </div>
+
+      <!-- Timeline visual -->
+      <div class="bg-gray-50 rounded-2xl p-8 border border-gray-100">
+        <h3 class="text-center text-navy-500 font-bold text-lg mb-6">Timeline típico de implementación</h3>
+        <div class="grid md:grid-cols-4 gap-4">
+          <div class="text-center">
+            <div class="text-brand-500 font-black text-2xl mb-1">Día 1</div>
+            <div class="text-sm font-semibold text-gray-700 mb-1">Sesión de diagnóstico</div>
+            <div class="text-xs text-gray-500">Entendemos tu proceso</div>
+          </div>
+          <div class="text-center">
+            <div class="text-brand-500 font-black text-2xl mb-1">Días 2–4</div>
+            <div class="text-sm font-semibold text-gray-700 mb-1">Configuración</div>
+            <div class="text-xs text-gray-500">Personalizamos el agente</div>
+          </div>
+          <div class="text-center">
+            <div class="text-brand-500 font-black text-2xl mb-1">Día 5</div>
+            <div class="text-sm font-semibold text-gray-700 mb-1">Pruebas</div>
+            <div class="text-xs text-gray-500">Validamos con tu equipo</div>
+          </div>
+          <div class="text-center">
+            <div class="text-green-500 font-black text-2xl mb-1">Día 7</div>
+            <div class="text-sm font-semibold text-gray-700 mb-1">🚀 En producción</div>
+            <div class="text-xs text-gray-500">El agente ya trabaja</div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ======================================================
+       POR QUÉ MR TOOLIAA
+  ======================================================= -->
+  <section class="py-20 gradient-hero relative overflow-hidden">
+    <div class="absolute inset-0 overflow-hidden pointer-events-none">
+      <div class="absolute top-0 right-0 w-96 h-96 bg-brand-500/10 rounded-full blur-3xl"></div>
+      <div class="absolute bottom-0 left-0 w-64 h-64 bg-blue-400/10 rounded-full blur-3xl"></div>
+    </div>
+
+    <div class="max-w-6xl mx-auto px-4 sm:px-6 relative z-10">
+      <div class="text-center mb-14">
+        <span class="text-brand-500 font-bold text-sm uppercase tracking-wider">Diferenciadores</span>
+        <h2 class="text-3xl sm:text-4xl font-black text-white mt-2 mb-4">
+          Por qué elegir <span class="text-brand-500">MR ToolIAA</span>
+        </h2>
+        <p class="text-white/60 text-lg max-w-2xl mx-auto">
+          No somos una agencia de software genérico. Somos especialistas en agentes IA para negocios latinoamericanos.
+        </p>
+      </div>
+
+      <div class="grid sm:grid-cols-2 lg:grid-cols-3 gap-6">
+        <div class="bg-white/10 backdrop-blur border border-white/10 rounded-2xl p-6 card-hover">
+          <span class="text-3xl mb-4 block">🏗️</span>
+          <h3 class="text-white font-bold text-lg mb-2">Arsenal completo de agentes</h3>
+          <p class="text-white/60 text-sm leading-relaxed">
+            Más de 13 agentes especializados trabajando juntos: investigación, marketing, operaciones, desarrollo y más.
+          </p>
+        </div>
+
+        <div class="bg-white/10 backdrop-blur border border-white/10 rounded-2xl p-6 card-hover">
+          <span class="text-3xl mb-4 block">📱</span>
+          <h3 class="text-white font-bold text-lg mb-2">WhatsApp nativo</h3>
+          <p class="text-white/60 text-sm leading-relaxed">
+            Tus clientes ya usan WhatsApp. Nuestros agentes viven donde tus clientes están — sin fricción, sin apps nuevas.
+          </p>
+        </div>
+
+        <div class="bg-white/10 backdrop-blur border border-white/10 rounded-2xl p-6 card-hover">
+          <span class="text-3xl mb-4 block">⚡</span>
+          <h3 class="text-white font-bold text-lg mb-2">Implementación en días</h3>
+          <p class="text-white/60 text-sm leading-relaxed">
+            Mientras otros tardan meses en desarrollar, nosotros desplegamos en 7 días. Tu negocio empieza a ahorrar tiempo esta semana.
+          </p>
+        </div>
+
+        <div class="bg-white/10 backdrop-blur border border-white/10 rounded-2xl p-6 card-hover">
+          <span class="text-3xl mb-4 block">🇩🇴</span>
+          <h3 class="text-white font-bold text-lg mb-2">Enfocados en RD y LATAM</h3>
+          <p class="text-white/60 text-sm leading-relaxed">
+            Entendemos el mercado dominicano: precios en RD$, horarios locales, terminología del sector, contexto cultural.
+          </p>
+        </div>
+
+        <div class="bg-white/10 backdrop-blur border border-white/10 rounded-2xl p-6 card-hover">
+          <span class="text-3xl mb-4 block">🗣️</span>
+          <h3 class="text-white font-bold text-lg mb-2">Soporte en español</h3>
+          <p class="text-white/60 text-sm leading-relaxed">
+            Sin barreras de idioma. Nuestro equipo habla tu idioma, entiende tu negocio y responde rápido cuando lo necesitas.
+          </p>
+        </div>
+
+        <div class="bg-brand-500/20 border border-brand-500/30 rounded-2xl p-6 card-hover">
+          <span class="text-3xl mb-4 block">💰</span>
+          <h3 class="text-white font-bold text-lg mb-2">ROI desde el primer mes</h3>
+          <p class="text-white/60 text-sm leading-relaxed">
+            El costo del agente es menor que el salario que ahorra. La mayoría de clientes recuperan la inversión en menos de 30 días.
+          </p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ======================================================
+       TESTIMONIOS
+  ======================================================= -->
+  <section class="py-20 bg-white">
+    <div class="max-w-6xl mx-auto px-4 sm:px-6">
+
+      <div class="text-center mb-14">
+        <span class="text-brand-500 font-bold text-sm uppercase tracking-wider">Social proof</span>
+        <h2 class="text-3xl sm:text-4xl font-black text-navy-500 mt-2 mb-4">
+          Empresas en República Dominicana<br/> ya <span class="text-brand-500">automatizan con nosotros</span>
+        </h2>
+        <p class="text-gray-500 text-lg">Estas son las historias de negocios que recuperaron su tiempo.</p>
+      </div>
+
+      <div class="grid md:grid-cols-3 gap-8">
+
+        <div class="testimonial-card bg-gray-50 rounded-2xl p-8 card-hover">
+          <div class="flex items-center gap-1 mb-4">
+            <span class="text-yellow-400 text-lg">★★★★★</span>
+          </div>
+          <p class="text-gray-600 leading-relaxed mb-6 italic">
+            "Antes atendíamos citas por teléfono y nuestras recepcionistas estaban saturadas. Ahora el 70% de las citas llegan por WhatsApp automáticamente. Nuestra ocupación subió 35%."
+          </p>
+          <div class="flex items-center gap-3">
+            <div class="w-12 h-12 bg-navy-500 rounded-full flex items-center justify-center text-white font-bold">
+              DM
+            </div>
+            <div>
+              <div class="font-bold text-gray-900">Dra. Marte</div>
+              <div class="text-sm text-gray-500">Clínica dental · Santo Domingo</div>
+            </div>
+          </div>
+        </div>
+
+        <div class="testimonial-card bg-gray-50 rounded-2xl p-8 card-hover">
+          <div class="flex items-center gap-1 mb-4">
+            <span class="text-yellow-400 text-lg">★★★★★</span>
+          </div>
+          <p class="text-gray-600 leading-relaxed mb-6 italic">
+            "Mis empleados perdían 3 horas al día buscando precios en el sistema. Con el bot, el cliente recibe su cotización en segundos. Ya cerramos ventas que antes se perdían por demora."
+          </p>
+          <div class="flex items-center gap-3">
+            <div class="w-12 h-12 bg-brand-500 rounded-full flex items-center justify-center text-white font-bold">
+              RC
+            </div>
+            <div>
+              <div class="font-bold text-gray-900">Rafael C.</div>
+              <div class="text-sm text-gray-500">Ferretería · Santiago</div>
+            </div>
+          </div>
+        </div>
+
+        <div class="testimonial-card bg-gray-50 rounded-2xl p-8 card-hover">
+          <div class="flex items-center gap-1 mb-4">
+            <span class="text-yellow-400 text-lg">★★★★★</span>
+          </div>
+          <p class="text-gray-600 leading-relaxed mb-6 italic">
+            "Lo que más me sorprendió fue la velocidad. En una semana ya teníamos el agente funcionando. El equipo de MR ToolIAA nos guió en todo y el soporte ha sido excelente."
+          </p>
+          <div class="flex items-center gap-3">
+            <div class="w-12 h-12 bg-green-500 rounded-full flex items-center justify-center text-white font-bold">
+              LG
+            </div>
+            <div>
+              <div class="font-bold text-gray-900">Luis G.</div>
+              <div class="text-sm text-gray-500">Empresa de servicios · RD</div>
+            </div>
+          </div>
+        </div>
+
+      </div>
+
+      <!-- Logos bar placeholder -->
+      <div class="mt-14 text-center">
+        <p class="text-gray-400 text-sm font-medium mb-6 uppercase tracking-wider">Confiado por empresas en todo el país</p>
+        <div class="flex flex-wrap justify-center gap-8 opacity-40">
+          <div class="bg-gray-200 rounded-lg w-28 h-10 flex items-center justify-center text-xs font-bold text-gray-500">CLÍNICA RD</div>
+          <div class="bg-gray-200 rounded-lg w-28 h-10 flex items-center justify-center text-xs font-bold text-gray-500">FERRETERÍA</div>
+          <div class="bg-gray-200 rounded-lg w-28 h-10 flex items-center justify-center text-xs font-bold text-gray-500">EMPRESA SRL</div>
+          <div class="bg-gray-200 rounded-lg w-28 h-10 flex items-center justify-center text-xs font-bold text-gray-500">SERVICIOS SA</div>
+          <div class="bg-gray-200 rounded-lg w-28 h-10 flex items-center justify-center text-xs font-bold text-gray-500">COMERCIOS</div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ======================================================
+       PRICING
+  ======================================================= -->
+  <section id="pricing" class="py-20 gradient-section">
+    <div class="max-w-5xl mx-auto px-4 sm:px-6">
+
+      <div class="text-center mb-14">
+        <span class="text-brand-500 font-bold text-sm uppercase tracking-wider">Inversión</span>
+        <h2 class="text-3xl sm:text-4xl font-black text-navy-500 mt-2 mb-4">
+          Precios <span class="text-brand-500">transparentes</span>, sin sorpresas
+        </h2>
+        <p class="text-gray-500 text-lg max-w-xl mx-auto">
+          Planes flexibles para cada etapa de tu negocio. Sin contratos de largo plazo — cancela cuando quieras.
+        </p>
+      </div>
+
+      <div class="grid md:grid-cols-3 gap-8 items-center">
+
+        <!-- Starter -->
+        <div class="bg-white rounded-2xl p-8 shadow-sm border border-gray-100 card-hover">
+          <div class="text-navy-500 font-bold text-sm uppercase tracking-wider mb-3">Starter</div>
+          <div class="flex items-end gap-1 mb-2">
+            <span class="text-4xl font-black text-navy-500">RD$15,000</span>
+          </div>
+          <div class="text-gray-400 text-sm mb-6">por mes</div>
+          <ul class="space-y-3 mb-8 text-sm text-gray-600">
+            <li class="flex items-center gap-2.5"><span class="text-brand-500 font-bold">✓</span> 1 agente IA especializado</li>
+            <li class="flex items-center gap-2.5"><span class="text-brand-500 font-bold">✓</span> 1 canal (WhatsApp)</li>
+            <li class="flex items-center gap-2.5"><span class="text-brand-500 font-bold">✓</span> Hasta 500 interacciones/mes</li>
+            <li class="flex items-center gap-2.5"><span class="text-brand-500 font-bold">✓</span> Dashboard básico</li>
+            <li class="flex items-center gap-2.5"><span class="text-brand-500 font-bold">✓</span> Soporte por WhatsApp</li>
+          </ul>
+          <a href="https://wa.me/18090000000" target="_blank"
+             class="block text-center border-2 border-navy-500 text-navy-500 font-bold py-3 rounded-xl hover:bg-navy-500 hover:text-white transition-colors">
+            Empezar →
+          </a>
+        </div>
+
+        <!-- Pro (popular) -->
+        <div class="pricing-popular bg-white rounded-2xl p-8 shadow-xl card-hover">
+          <div class="text-brand-500 font-bold text-sm uppercase tracking-wider mb-3">Pro</div>
+          <div class="flex items-end gap-1 mb-2">
+            <span class="text-4xl font-black text-navy-500">RD$35,000</span>
+          </div>
+          <div class="text-gray-400 text-sm mb-6">por mes</div>
+          <ul class="space-y-3 mb-8 text-sm text-gray-600">
+            <li class="flex items-center gap-2.5"><span class="text-brand-500 font-bold">✓</span> Múltiples agentes IA</li>
+            <li class="flex items-center gap-2.5"><span class="text-brand-500 font-bold">✓</span> Todos los canales (WA + más)</li>
+            <li class="flex items-center gap-2.5"><span class="text-brand-500 font-bold">✓</span> Interacciones ilimitadas</li>
+            <li class="flex items-center gap-2.5"><span class="text-brand-500 font-bold">✓</span> Integraciones personalizadas</li>
+            <li class="flex items-center gap-2.5"><span class="text-brand-500 font-bold">✓</span> Reportes avanzados</li>
+            <li class="flex items-center gap-2.5"><span class="text-brand-500 font-bold">✓</span> Soporte prioritario</li>
+          </ul>
+          <a href="https://wa.me/18090000000" target="_blank"
+             class="block text-center gradient-cta text-white font-bold py-3 rounded-xl shadow-lg hover:opacity-90 transition-opacity">
+            Empezar →
+          </a>
+        </div>
+
+        <!-- Enterprise -->
+        <div class="bg-navy-500 rounded-2xl p-8 shadow-sm card-hover text-white">
+          <div class="text-brand-500 font-bold text-sm uppercase tracking-wider mb-3">Enterprise</div>
+          <div class="flex items-end gap-1 mb-2">
+            <span class="text-3xl font-black">Cotización</span>
+          </div>
+          <div class="text-white/40 text-sm mb-6">personalizada</div>
+          <ul class="space-y-3 mb-8 text-sm text-white/70">
+            <li class="flex items-center gap-2.5"><span class="text-brand-400 font-bold">✓</span> Arsenal completo de agentes</li>
+            <li class="flex items-center gap-2.5"><span class="text-brand-400 font-bold">✓</span> Desarrollos a medida</li>
+            <li class="flex items-center gap-2.5"><span class="text-brand-400 font-bold">✓</span> SLA garantizado</li>
+            <li class="flex items-center gap-2.5"><span class="text-brand-400 font-bold">✓</span> Gerente de cuenta dedicado</li>
+            <li class="flex items-center gap-2.5"><span class="text-brand-400 font-bold">✓</span> Capacitación del equipo</li>
+          </ul>
+          <a href="https://wa.me/18090000000" target="_blank"
+             class="block text-center bg-white/15 hover:bg-white/25 text-white font-bold py-3 rounded-xl transition-colors border border-white/20">
+            Agendar demo →
+          </a>
+        </div>
+
+      </div>
+
+      <!-- Setup note -->
+      <p class="text-center text-gray-400 text-sm mt-8">
+        * Todos los planes incluyen implementación y capacitación. Setup único de RD$10,000 no incluido en el mensual.
+      </p>
+
+      <!-- Demo CTA -->
+      <div class="mt-12 text-center">
+        <a href="https://wa.me/18090000000" target="_blank"
+           class="inline-flex items-center gap-3 gradient-cta text-white font-bold px-10 py-5 rounded-full text-lg shadow-xl shadow-orange-200 hover:shadow-orange-300 transition-shadow">
+          <span class="text-2xl">📅</span>
+          Agendar demo gratuita — sin compromiso
+        </a>
+        <p class="text-gray-400 text-sm mt-3">Respuesta en menos de 2 horas · Lunes a viernes 8am–7pm AST</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- ======================================================
+       CTA FINAL
+  ======================================================= -->
+  <section class="py-20 gradient-hero text-center relative overflow-hidden">
+    <div class="absolute inset-0 overflow-hidden pointer-events-none">
+      <div class="absolute top-0 left-1/2 -translate-x-1/2 w-96 h-96 bg-brand-500/15 rounded-full blur-3xl"></div>
+    </div>
+    <div class="max-w-3xl mx-auto px-4 sm:px-6 relative z-10">
+      <h2 class="text-4xl sm:text-5xl font-black text-white mb-5">
+        Tu negocio merece<br/>trabajar <span class="text-brand-500">más inteligente</span>
+      </h2>
+      <p class="text-white/65 text-lg mb-10 max-w-xl mx-auto">
+        Únete a las empresas dominicanas que ya automatizan sus procesos con agentes IA. La consulta inicial es gratis y sin compromiso.
+      </p>
+      <a href="https://wa.me/18090000000" target="_blank"
+         class="inline-flex items-center gap-3 bg-white text-navy-500 font-black px-10 py-5 rounded-full text-xl shadow-2xl hover:shadow-white/20 transition-shadow">
+        <span class="text-2xl">💬</span>
+        Hablar por WhatsApp ahora
+      </a>
+      <p class="text-white/40 text-sm mt-5">Sin ventas presionadas · Solo soluciones para tu negocio</p>
+    </div>
+  </section>
+
+  <!-- ======================================================
+       FOOTER
+  ======================================================= -->
+  <footer class="bg-navy-800 text-white py-14">
+    <div class="max-w-6xl mx-auto px-4 sm:px-6">
+      <div class="grid md:grid-cols-4 gap-10 mb-12">
+
+        <!-- Brand -->
+        <div class="md:col-span-2">
+          <div class="flex items-center gap-2 mb-4">
+            <span class="text-2xl">🤖</span>
+            <span class="font-black text-xl">MR <span class="text-brand-500">ToolIAA</span></span>
+          </div>
+          <p class="text-white/50 leading-relaxed mb-5 max-w-sm">
+            Automatizamos los procesos repetitivos de tu empresa con agentes de inteligencia artificial especializados.
+          </p>
+          <div class="flex items-center gap-3">
+            <a href="https://wa.me/18090000000" target="_blank"
+               class="flex items-center gap-2 bg-green-600 hover:bg-green-700 text-white text-sm font-bold px-4 py-2 rounded-full transition-colors">
+              <span>📱</span> WhatsApp
+            </a>
+            <a href="mailto:contacto@mrtooliaa.com"
+               class="flex items-center gap-2 bg-white/10 hover:bg-white/20 text-white text-sm font-medium px-4 py-2 rounded-full transition-colors">
+              ✉️ Email
+            </a>
+          </div>
+        </div>
+
+        <!-- Products -->
+        <div>
+          <h4 class="font-bold text-sm uppercase tracking-wider text-white/40 mb-4">Productos</h4>
+          <ul class="space-y-2.5 text-white/65 text-sm">
+            <li><a href="/mediturno" class="hover:text-white transition-colors">🏥 MediTurno IA</a></li>
+            <li><a href="/ferretquote" class="hover:text-white transition-colors">🔩 Ferret-Quote Bot</a></li>
+            <li><a href="#" class="hover:text-white transition-colors">🤖 Agente Custom</a></li>
+          </ul>
+        </div>
+
+        <!-- Contact -->
+        <div>
+          <h4 class="font-bold text-sm uppercase tracking-wider text-white/40 mb-4">Contacto</h4>
+          <ul class="space-y-2.5 text-white/65 text-sm">
+            <li class="flex items-center gap-2">
+              <span>📱</span>
+              <a href="https://wa.me/18090000000" class="hover:text-white transition-colors">+1 (809) 000-0000</a>
+            </li>
+            <li class="flex items-center gap-2">
+              <span>✉️</span>
+              <a href="mailto:contacto@mrtooliaa.com" class="hover:text-white transition-colors">contacto@mrtooliaa.com</a>
+            </li>
+            <li class="flex items-center gap-2">
+              <span>📍</span>
+              <span>Santo Domingo, RD</span>
+            </li>
+          </ul>
+        </div>
+      </div>
+
+      <div class="border-t border-white/10 pt-8 flex flex-col md:flex-row items-center justify-between gap-4">
+        <p class="text-white/30 text-sm">© 2026 MR ToolIAA. Todos los derechos reservados.</p>
+        <p class="text-white/30 text-sm flex items-center gap-1">
+          Hecho con ❤️ en República Dominicana 🇩🇴
+        </p>
+      </div>
+    </div>
+  </footer>
+
+  <!-- ======================================================
+       WHATSAPP FLOATING BUTTON
+  ======================================================= -->
+  <a href="https://wa.me/18090000000" target="_blank"
+     class="fixed bottom-6 right-6 z-50 bg-green-500 hover:bg-green-600 text-white rounded-full shadow-2xl shadow-green-500/40 transition-all hover:scale-105 flex items-center gap-2 overflow-hidden"
+     style="padding: 14px 20px; max-width: 200px;">
+    <svg class="w-6 h-6 flex-shrink-0" fill="currentColor" viewBox="0 0 24 24">
+      <path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/>
+    </svg>
+    <span class="font-bold text-sm whitespace-nowrap hidden sm:block">Escribir ahora</span>
+  </a>
+
+</body>
+</html>

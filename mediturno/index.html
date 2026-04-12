@@ -1,0 +1,697 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>MediTurno IA — Agendamiento de Citas por WhatsApp para Clínicas</title>
+  <meta name="description" content="Tu clínica llena sin llamadas perdidas. MediTurno IA agenda citas por WhatsApp las 24 horas, elimina el 80% de los no-shows y libera a tu recepcionista de cientos de llamadas al mes." />
+  <meta name="keywords" content="agendamiento citas whatsapp, bot citas clínica, mediturno, citas médicas RD, automatización clínicas dominicanas" />
+  <meta property="og:title" content="MediTurno IA — Tu clínica llena, sin llamadas perdidas" />
+  <meta property="og:description" content="Bot de WhatsApp que agenda citas automáticamente, confirma y recuerda a los pacientes. Disponible 24/7." />
+  <meta property="og:type" content="website" />
+  <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>🏥</text></svg>" />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&display=swap" rel="stylesheet" />
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script>
+    tailwind.config = {
+      theme: {
+        extend: {
+          colors: {
+            medical: {
+              50:  '#e6f2ff',
+              100: '#cce5ff',
+              500: '#0066CC',
+              600: '#0055aa',
+              700: '#004488',
+            },
+            green: {
+              400: '#00dd77',
+              500: '#00CC66',
+              600: '#00aa55',
+            }
+          },
+          fontFamily: {
+            sans: ['Inter', 'sans-serif'],
+          }
+        }
+      }
+    }
+  </script>
+  <style>
+    html { scroll-behavior: smooth; }
+    .gradient-hero {
+      background: linear-gradient(135deg, #003d7a 0%, #0066CC 50%, #0088ff 100%);
+    }
+    .gradient-cta {
+      background: linear-gradient(135deg, #00aa55 0%, #00CC66 100%);
+    }
+    .card-hover {
+      transition: transform 0.2s ease, box-shadow 0.2s ease;
+    }
+    .card-hover:hover {
+      transform: translateY(-4px);
+      box-shadow: 0 20px 40px rgba(0, 102, 204, 0.15);
+    }
+    .wa-pulse {
+      animation: pulse 2s infinite;
+    }
+    @keyframes pulse {
+      0%, 100% { box-shadow: 0 0 0 0 rgba(0, 204, 102, 0.5); }
+      50% { box-shadow: 0 0 0 12px rgba(0, 204, 102, 0); }
+    }
+    .check-item::before {
+      content: '✓';
+      color: #00CC66;
+      font-weight: 700;
+      margin-right: 8px;
+    }
+  </style>
+
+  <!-- Schema.org structured data -->
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "SoftwareApplication",
+    "name": "MediTurno IA",
+    "applicationCategory": "HealthApplication",
+    "operatingSystem": "WhatsApp",
+    "description": "Bot de inteligencia artificial para agendamiento de citas médicas por WhatsApp. Automatiza confirmaciones, recordatorios y gestión de agenda para clínicas.",
+    "offers": [
+      {
+        "@type": "Offer",
+        "name": "Plan Básico",
+        "price": "2500",
+        "priceCurrency": "DOP",
+        "billingPeriod": "P1M"
+      },
+      {
+        "@type": "Offer",
+        "name": "Plan Pro",
+        "price": "5000",
+        "priceCurrency": "DOP",
+        "billingPeriod": "P1M"
+      }
+    ],
+    "provider": {
+      "@type": "Organization",
+      "name": "MR ToolIAA",
+      "url": "https://mrtooliaa.com"
+    }
+  }
+  </script>
+</head>
+<body class="font-sans text-gray-800 antialiased">
+
+  <!-- ── NAVBAR ─────────────────────────────────────────────────────────────── -->
+  <nav class="fixed top-0 left-0 right-0 z-50 bg-white/95 backdrop-blur-sm border-b border-gray-100 shadow-sm">
+    <div class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
+      <div class="flex items-center justify-between h-16">
+        <div class="flex items-center gap-3">
+          <img src="/assets/logo_mrtooliaa.png" alt="MR ToolIAA" style="height:32px;width:auto;">
+          <span class="text-gray-300 hidden sm:block">|</span>
+          <span class="text-lg font-bold text-medical-500 hidden sm:block">MediTurno <span class="text-gray-800">IA</span></span>
+        </div>
+        <div class="hidden md:flex items-center gap-8 text-sm font-medium text-gray-600">
+          <a href="/" class="text-gray-400 hover:text-medical-500 transition-colors">← MR ToolIAA</a>
+          <a href="#como-funciona" class="hover:text-medical-500 transition-colors">Cómo funciona</a>
+          <a href="#beneficios" class="hover:text-medical-500 transition-colors">Beneficios</a>
+          <a href="#pricing" class="hover:text-medical-500 transition-colors">Precios</a>
+        </div>
+        <a href="https://wa.me/18099567956?text=Hola,%20me%20interesa%20una%20demo%20de%20MediTurno%20IA"
+           target="_blank"
+           class="bg-green-500 hover:bg-green-600 text-white text-sm font-semibold px-4 py-2 rounded-full transition-colors flex items-center gap-2">
+          <svg class="w-4 h-4" fill="currentColor" viewBox="0 0 24 24"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/></svg>
+          Agenda una demo
+        </a>
+      </div>
+    </div>
+  </nav>
+
+  <!-- ── HERO ───────────────────────────────────────────────────────────────── -->
+  <section class="gradient-hero pt-24 pb-20 px-4 sm:px-6 lg:px-8 text-white">
+    <div class="max-w-6xl mx-auto">
+      <div class="grid lg:grid-cols-2 gap-12 items-center">
+        <div>
+          <div class="inline-flex items-center gap-2 bg-white/15 backdrop-blur-sm rounded-full px-4 py-1.5 text-sm font-medium mb-6">
+            <span class="w-2 h-2 bg-green-400 rounded-full wa-pulse"></span>
+            Disponible 24/7 en WhatsApp
+          </div>
+          <h1 class="text-4xl sm:text-5xl lg:text-6xl font-black leading-tight mb-6">
+            Tu clínica llena,<br/>
+            <span class="text-green-400">sin llamadas<br/>perdidas.</span>
+          </h1>
+          <p class="text-xl text-blue-100 mb-8 leading-relaxed">
+            MediTurno IA agenda citas por WhatsApp automáticamente — las 24 horas, los 7 días. Tus pacientes confirman en 30 segundos. Tú dejas de perder tiempo en el teléfono.
+          </p>
+          <div class="flex flex-col sm:flex-row gap-4">
+            <a href="https://wa.me/18099567956?text=Hola,%20quiero%20probar%20MediTurno%20IA%20gratis"
+               target="_blank"
+               class="gradient-cta hover:opacity-90 text-white font-bold px-8 py-4 rounded-xl text-lg transition-opacity flex items-center justify-center gap-3 wa-pulse">
+              <svg class="w-6 h-6" fill="currentColor" viewBox="0 0 24 24"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/></svg>
+              Prueba gratis 14 días
+            </a>
+            <a href="#como-funciona"
+               class="border-2 border-white/40 hover:border-white text-white font-semibold px-8 py-4 rounded-xl text-lg transition-colors text-center">
+              Ver cómo funciona →
+            </a>
+          </div>
+          <p class="text-blue-200 text-sm mt-4">Sin contrato. Sin tarjeta de crédito. Configura en 1 hora.</p>
+        </div>
+
+        <!-- Chat mockup -->
+        <div class="hidden lg:block">
+          <div class="bg-white rounded-3xl shadow-2xl overflow-hidden max-w-sm mx-auto">
+            <!-- WhatsApp header -->
+            <div class="bg-[#075E54] px-4 py-3 flex items-center gap-3">
+              <div class="w-10 h-10 bg-green-400 rounded-full flex items-center justify-center text-white font-bold text-lg">M</div>
+              <div>
+                <p class="text-white font-semibold text-sm">MediTurno IA 🏥</p>
+                <p class="text-green-200 text-xs">En línea ahora</p>
+              </div>
+            </div>
+            <!-- Chat messages -->
+            <div class="bg-[#ECE5DD] p-4 space-y-3 min-h-[380px]">
+              <div class="flex justify-end">
+                <div class="bg-[#DCF8C6] rounded-2xl rounded-tr-sm px-4 py-2 max-w-[200px] shadow-sm">
+                  <p class="text-gray-800 text-sm">Hola, quiero agendar una cita con el Dr. Pérez</p>
+                  <p class="text-gray-400 text-xs text-right mt-1">9:05 AM ✓✓</p>
+                </div>
+              </div>
+              <div class="flex justify-start">
+                <div class="bg-white rounded-2xl rounded-tl-sm px-4 py-2 max-w-[220px] shadow-sm">
+                  <p class="text-gray-800 text-sm">¡Hola! 👋 Con gusto te ayudo. ¿Para cuándo necesitas la cita?</p>
+                  <p class="text-gray-400 text-xs text-right mt-1">9:05 AM</p>
+                </div>
+              </div>
+              <div class="flex justify-end">
+                <div class="bg-[#DCF8C6] rounded-2xl rounded-tr-sm px-4 py-2 max-w-[160px] shadow-sm">
+                  <p class="text-gray-800 text-sm">Mañana por la mañana</p>
+                  <p class="text-gray-400 text-xs text-right mt-1">9:06 AM ✓✓</p>
+                </div>
+              </div>
+              <div class="flex justify-start">
+                <div class="bg-white rounded-2xl rounded-tl-sm px-4 py-2 max-w-[240px] shadow-sm">
+                  <p class="text-gray-800 text-sm">Perfecto. Tengo estos horarios disponibles:</p>
+                  <p class="text-gray-800 text-sm mt-2">📅 <strong>Martes 29/03</strong><br/>• 8:00 AM<br/>• 9:30 AM<br/>• 11:00 AM</p>
+                  <p class="text-gray-800 text-sm mt-1">¿Cuál prefieres?</p>
+                  <p class="text-gray-400 text-xs text-right mt-1">9:06 AM</p>
+                </div>
+              </div>
+              <div class="flex justify-end">
+                <div class="bg-[#DCF8C6] rounded-2xl rounded-tr-sm px-4 py-2 max-w-[120px] shadow-sm">
+                  <p class="text-gray-800 text-sm">9:30 AM ✅</p>
+                  <p class="text-gray-400 text-xs text-right mt-1">9:07 AM ✓✓</p>
+                </div>
+              </div>
+              <div class="flex justify-start">
+                <div class="bg-white rounded-2xl rounded-tl-sm px-4 py-2 max-w-[240px] shadow-sm">
+                  <p class="text-gray-800 text-sm">✅ <strong>¡Cita confirmada!</strong></p>
+                  <p class="text-gray-800 text-sm mt-1">📍 Clínica San Rafael<br/>📅 Martes 29/03, 9:30 AM<br/>👨‍⚕️ Dr. Pérez</p>
+                  <p class="text-gray-800 text-sm mt-1">Recibirás un recordatorio 24h antes.</p>
+                  <p class="text-gray-400 text-xs text-right mt-1">9:07 AM</p>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Stats bar -->
+      <div class="mt-16 grid grid-cols-2 md:grid-cols-4 gap-6">
+        <div class="text-center">
+          <p class="text-4xl font-black text-green-400">80%</p>
+          <p class="text-blue-100 text-sm mt-1">menos no-shows</p>
+        </div>
+        <div class="text-center">
+          <p class="text-4xl font-black text-green-400">30s</p>
+          <p class="text-blue-100 text-sm mt-1">para agendar una cita</p>
+        </div>
+        <div class="text-center">
+          <p class="text-4xl font-black text-green-400">24/7</p>
+          <p class="text-blue-100 text-sm mt-1">disponibilidad</p>
+        </div>
+        <div class="text-center">
+          <p class="text-4xl font-black text-green-400">0</p>
+          <p class="text-blue-100 text-sm mt-1">apps que instalar</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ── PROBLEMA ────────────────────────────────────────────────────────────── -->
+  <section class="py-20 px-4 sm:px-6 lg:px-8 bg-gray-50">
+    <div class="max-w-6xl mx-auto">
+      <div class="text-center mb-14">
+        <span class="text-medical-500 font-semibold text-sm uppercase tracking-wider">El problema</span>
+        <h2 class="text-3xl sm:text-4xl font-black mt-2 text-gray-900">
+          Tu clínica pierde pacientes<br/>
+          <span class="text-red-500">sin que te des cuenta.</span>
+        </h2>
+        <p class="text-gray-500 mt-4 text-lg max-w-2xl mx-auto">
+          Cada llamada no contestada, cada "te llamo más tarde", cada olvido de cita — es un paciente que se va donde la competencia.
+        </p>
+      </div>
+      <div class="grid md:grid-cols-3 gap-8">
+        <div class="bg-white rounded-2xl p-8 border border-red-100 card-hover">
+          <div class="w-14 h-14 bg-red-50 rounded-2xl flex items-center justify-center text-3xl mb-6">📵</div>
+          <h3 class="font-bold text-xl mb-3 text-gray-900">Llamadas perdidas</h3>
+          <p class="text-gray-500 leading-relaxed">
+            El 40% de las llamadas a clínicas se realizan fuera del horario de oficina. Sin respuesta = sin paciente.
+          </p>
+        </div>
+        <div class="bg-white rounded-2xl p-8 border border-red-100 card-hover">
+          <div class="w-14 h-14 bg-red-50 rounded-2xl flex items-center justify-center text-3xl mb-6">🚫</div>
+          <h3 class="font-bold text-xl mb-3 text-gray-900">No-shows frecuentes</h3>
+          <p class="text-gray-500 leading-relaxed">
+            Sin recordatorios automáticos, el 25-35% de los pacientes olvidan su cita. Tiempo perdido, agenda vacía, ingreso no cobrado.
+          </p>
+        </div>
+        <div class="bg-white rounded-2xl p-8 border border-red-100 card-hover">
+          <div class="w-14 h-14 bg-red-50 rounded-2xl flex items-center justify-center text-3xl mb-6">⏰</div>
+          <h3 class="font-bold text-xl mb-3 text-gray-900">Recepcionista saturada</h3>
+          <p class="text-gray-500 leading-relaxed">
+            Confirmar, reprogramar, recordar citas ocupa hasta 3 horas diarias de tu recepcionista — tiempo que podría dedicar a los pacientes presentes.
+          </p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ── SOLUCIÓN ────────────────────────────────────────────────────────────── -->
+  <section class="py-20 px-4 sm:px-6 lg:px-8 bg-white">
+    <div class="max-w-6xl mx-auto">
+      <div class="text-center mb-14">
+        <span class="text-green-500 font-semibold text-sm uppercase tracking-wider">La solución</span>
+        <h2 class="text-3xl sm:text-4xl font-black mt-2 text-gray-900">
+          MediTurno IA: tu recepcionista<br/>
+          <span class="text-medical-500">que nunca duerme.</span>
+        </h2>
+        <p class="text-gray-500 mt-4 text-lg max-w-2xl mx-auto">
+          Un agente de inteligencia artificial conectado a tu WhatsApp que agenda, confirma y recuerda citas — completamente solo, sin errores y en segundos.
+        </p>
+      </div>
+      <div class="grid md:grid-cols-2 lg:grid-cols-3 gap-6">
+        <div class="bg-gradient-to-br from-medical-50 to-blue-50 rounded-2xl p-6 card-hover">
+          <div class="text-3xl mb-4">🤖</div>
+          <h3 class="font-bold text-lg mb-2">Agendamiento automático</h3>
+          <p class="text-gray-600 text-sm leading-relaxed">El bot muestra los horarios disponibles en tiempo real y confirma la cita sin intervención humana.</p>
+        </div>
+        <div class="bg-gradient-to-br from-green-50 to-emerald-50 rounded-2xl p-6 card-hover">
+          <div class="text-3xl mb-4">🔔</div>
+          <h3 class="font-bold text-lg mb-2">Recordatorios automáticos</h3>
+          <p class="text-gray-600 text-sm leading-relaxed">Mensaje automático 24h y 2h antes de cada cita. El paciente confirma con un mensaje y no se olvida más.</p>
+        </div>
+        <div class="bg-gradient-to-br from-purple-50 to-indigo-50 rounded-2xl p-6 card-hover">
+          <div class="text-3xl mb-4">📅</div>
+          <h3 class="font-bold text-lg mb-2">Agenda inteligente</h3>
+          <p class="text-gray-600 text-sm leading-relaxed">Conecta con tu calendario. Sin doble-reservas, sin errores. La agenda siempre actualizada en tiempo real.</p>
+        </div>
+        <div class="bg-gradient-to-br from-orange-50 to-amber-50 rounded-2xl p-6 card-hover">
+          <div class="text-3xl mb-4">💬</div>
+          <h3 class="font-bold text-lg mb-2">Conversación natural</h3>
+          <p class="text-gray-600 text-sm leading-relaxed">El paciente escribe como habla. El bot entiende "mañana por la tarde" y sugiere los horarios correctos.</p>
+        </div>
+        <div class="bg-gradient-to-br from-teal-50 to-cyan-50 rounded-2xl p-6 card-hover">
+          <div class="text-3xl mb-4">📊</div>
+          <h3 class="font-bold text-lg mb-2">Dashboard de control</h3>
+          <p class="text-gray-600 text-sm leading-relaxed">Ve todas tus citas, estadísticas de no-shows y comportamiento de pacientes desde cualquier dispositivo.</p>
+        </div>
+        <div class="bg-gradient-to-br from-pink-50 to-rose-50 rounded-2xl p-6 card-hover">
+          <div class="text-3xl mb-4">🔧</div>
+          <h3 class="font-bold text-lg mb-2">Configuración en 1 hora</h3>
+          <p class="text-gray-600 text-sm leading-relaxed">Sin técnicos, sin apps, sin complicaciones. Configuras el nombre de tu clínica, horarios y médicos — listo.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ── CÓMO FUNCIONA ───────────────────────────────────────────────────────── -->
+  <section id="como-funciona" class="py-20 px-4 sm:px-6 lg:px-8 bg-gray-50">
+    <div class="max-w-6xl mx-auto">
+      <div class="text-center mb-14">
+        <span class="text-medical-500 font-semibold text-sm uppercase tracking-wider">El proceso</span>
+        <h2 class="text-3xl sm:text-4xl font-black mt-2 text-gray-900">
+          Tan fácil como enviar un mensaje.
+        </h2>
+        <p class="text-gray-500 mt-4 text-lg">
+          Tus pacientes ya saben usar WhatsApp. No hay nada nuevo que aprender.
+        </p>
+      </div>
+      <div class="grid md:grid-cols-3 gap-8 relative">
+        <!-- Connector line (desktop) -->
+        <div class="hidden md:block absolute top-16 left-1/3 right-1/3 h-0.5 bg-medical-200 z-0"></div>
+
+        <div class="text-center relative z-10">
+          <div class="w-16 h-16 bg-medical-500 rounded-2xl flex items-center justify-center text-white text-2xl font-black mx-auto mb-6 shadow-lg shadow-medical-200">1</div>
+          <div class="bg-white rounded-2xl p-6 card-hover border border-gray-100">
+            <div class="text-4xl mb-4">💬</div>
+            <h3 class="font-bold text-xl mb-3 text-gray-900">El paciente escribe</h3>
+            <p class="text-gray-500 leading-relaxed">
+              El paciente le envía un WhatsApp a tu clínica como lo haría normalmente: <em>"Quiero una cita con el doctor"</em>
+            </p>
+          </div>
+        </div>
+
+        <div class="text-center relative z-10">
+          <div class="w-16 h-16 bg-medical-500 rounded-2xl flex items-center justify-center text-white text-2xl font-black mx-auto mb-6 shadow-lg shadow-medical-200">2</div>
+          <div class="bg-white rounded-2xl p-6 card-hover border border-gray-100">
+            <div class="text-4xl mb-4">🤖</div>
+            <h3 class="font-bold text-xl mb-3 text-gray-900">El bot responde al instante</h3>
+            <p class="text-gray-500 leading-relaxed">
+              MediTurno IA muestra los horarios disponibles, pregunta sus datos básicos y confirma la cita en menos de 1 minuto.
+            </p>
+          </div>
+        </div>
+
+        <div class="text-center relative z-10">
+          <div class="w-16 h-16 bg-green-500 rounded-2xl flex items-center justify-center text-white text-2xl font-black mx-auto mb-6 shadow-lg shadow-green-200">✓</div>
+          <div class="bg-white rounded-2xl p-6 card-hover border border-gray-100">
+            <div class="text-4xl mb-4">✅</div>
+            <h3 class="font-bold text-xl mb-3 text-gray-900">Cita confirmada y recordada</h3>
+            <p class="text-gray-500 leading-relaxed">
+              El paciente recibe confirmación inmediata y recordatorios automáticos. Tú ves la cita en tu dashboard en tiempo real.
+            </p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ── BENEFICIOS ─────────────────────────────────────────────────────────── -->
+  <section id="beneficios" class="py-20 px-4 sm:px-6 lg:px-8 bg-white">
+    <div class="max-w-6xl mx-auto">
+      <div class="grid lg:grid-cols-2 gap-16 items-center">
+        <div>
+          <span class="text-green-500 font-semibold text-sm uppercase tracking-wider">Resultados reales</span>
+          <h2 class="text-3xl sm:text-4xl font-black mt-2 mb-8 text-gray-900">
+            Clínicas que usan MediTurno IA<br/>
+            <span class="text-medical-500">llenan su agenda.</span>
+          </h2>
+          <div class="space-y-4">
+            <div class="flex items-start gap-4 p-4 bg-green-50 rounded-xl">
+              <span class="text-2xl">📉</span>
+              <div>
+                <p class="font-bold text-gray-900">80% menos no-shows</p>
+                <p class="text-gray-500 text-sm">Los recordatorios automáticos eliminan el olvido — la principal causa de citas perdidas.</p>
+              </div>
+            </div>
+            <div class="flex items-start gap-4 p-4 bg-blue-50 rounded-xl">
+              <span class="text-2xl">⏰</span>
+              <div>
+                <p class="font-bold text-gray-900">3 horas menos de trabajo manual</p>
+                <p class="text-gray-500 text-sm">Tu recepcionista deja de hacer llamadas de confirmación y se enfoca en los pacientes presentes.</p>
+              </div>
+            </div>
+            <div class="flex items-start gap-4 p-4 bg-purple-50 rounded-xl">
+              <span class="text-2xl">🌙</span>
+              <div>
+                <p class="font-bold text-gray-900">Citas fuera de horario</p>
+                <p class="text-gray-500 text-sm">El 40% de los pacientes intenta agendar de noche o en fin de semana. Ahora los capturas todos.</p>
+              </div>
+            </div>
+            <div class="flex items-start gap-4 p-4 bg-orange-50 rounded-xl">
+              <span class="text-2xl">💰</span>
+              <div>
+                <p class="font-bold text-gray-900">Más ingresos, misma agenda</p>
+                <p class="text-gray-500 text-sm">Al reducir no-shows y capturar más citas fuera de horario, una clínica promedio recupera RD$20,000-50,000/mes adicionales.</p>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div>
+          <div class="bg-gray-900 rounded-3xl p-8 text-white">
+            <h3 class="text-xl font-bold mb-6 text-green-400">Sin MediTurno vs. Con MediTurno</h3>
+            <div class="space-y-4">
+              <div>
+                <div class="flex justify-between text-sm mb-1">
+                  <span class="text-gray-400">Citas perdidas por no-shows</span>
+                  <span class="text-red-400 font-bold">~30%</span>
+                </div>
+                <div class="h-2 bg-gray-700 rounded-full">
+                  <div class="h-2 bg-red-500 rounded-full" style="width: 30%"></div>
+                </div>
+              </div>
+              <div>
+                <div class="flex justify-between text-sm mb-1">
+                  <span class="text-gray-400">Citas perdidas con MediTurno IA</span>
+                  <span class="text-green-400 font-bold">~6%</span>
+                </div>
+                <div class="h-2 bg-gray-700 rounded-full">
+                  <div class="h-2 bg-green-500 rounded-full" style="width: 6%"></div>
+                </div>
+              </div>
+              <hr class="border-gray-700 my-4" />
+              <div>
+                <div class="flex justify-between text-sm mb-1">
+                  <span class="text-gray-400">Llamadas de confirmación manual</span>
+                  <span class="text-red-400 font-bold">~40/día</span>
+                </div>
+                <div class="h-2 bg-gray-700 rounded-full">
+                  <div class="h-2 bg-red-500 rounded-full" style="width: 80%"></div>
+                </div>
+              </div>
+              <div>
+                <div class="flex justify-between text-sm mb-1">
+                  <span class="text-gray-400">Con MediTurno IA</span>
+                  <span class="text-green-400 font-bold">~0/día</span>
+                </div>
+                <div class="h-2 bg-gray-700 rounded-full">
+                  <div class="h-2 bg-green-500 rounded-full" style="width: 2%"></div>
+                </div>
+              </div>
+              <hr class="border-gray-700 my-4" />
+              <div class="bg-green-900/30 rounded-xl p-4 border border-green-800">
+                <p class="text-green-400 font-bold text-lg">ROI promedio: 10x en el primer mes</p>
+                <p class="text-gray-400 text-sm mt-1">1 cita recuperada por semana cubre el costo del plan Básico.</p>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ── PARA QUIÉN ─────────────────────────────────────────────────────────── -->
+  <section class="py-20 px-4 sm:px-6 lg:px-8 bg-gray-50">
+    <div class="max-w-6xl mx-auto">
+      <div class="text-center mb-14">
+        <span class="text-medical-500 font-semibold text-sm uppercase tracking-wider">Para quién es</span>
+        <h2 class="text-3xl sm:text-4xl font-black mt-2 text-gray-900">
+          Perfecto para cualquier clínica<br/>con agenda de citas.
+        </h2>
+      </div>
+      <div class="grid sm:grid-cols-2 lg:grid-cols-4 gap-6">
+        <div class="bg-white rounded-2xl p-6 text-center card-hover border border-gray-100">
+          <div class="text-5xl mb-4">🩺</div>
+          <h3 class="font-bold text-gray-900 mb-2">Clínicas Médicas</h3>
+          <p class="text-gray-500 text-sm">Consultas generales, especialistas, medicina preventiva.</p>
+        </div>
+        <div class="bg-white rounded-2xl p-6 text-center card-hover border border-gray-100">
+          <div class="text-5xl mb-4">🦷</div>
+          <h3 class="font-bold text-gray-900 mb-2">Clínicas Dentales</h3>
+          <p class="text-gray-500 text-sm">Limpieza, ortodoncia, implantes — agendamiento sin cola.</p>
+        </div>
+        <div class="bg-white rounded-2xl p-6 text-center card-hover border border-gray-100">
+          <div class="text-5xl mb-4">🐾</div>
+          <h3 class="font-bold text-gray-900 mb-2">Clínicas Veterinarias</h3>
+          <p class="text-gray-500 text-sm">Consultas y vacunas para mascotas, disponible 24/7.</p>
+        </div>
+        <div class="bg-white rounded-2xl p-6 text-center card-hover border border-gray-100">
+          <div class="text-5xl mb-4">💆</div>
+          <h3 class="font-bold text-gray-900 mb-2">Centros de Estética</h3>
+          <p class="text-gray-500 text-sm">Spa, fisioterapia, nutrición — agenda llena sin esfuerzo.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ── PRICING ────────────────────────────────────────────────────────────── -->
+  <section id="pricing" class="py-20 px-4 sm:px-6 lg:px-8 bg-white">
+    <div class="max-w-6xl mx-auto">
+      <div class="text-center mb-14">
+        <span class="text-medical-500 font-semibold text-sm uppercase tracking-wider">Precios</span>
+        <h2 class="text-3xl sm:text-4xl font-black mt-2 text-gray-900">
+          Un precio justo.<br/>
+          <span class="text-medical-500">Un ROI inmediato.</span>
+        </h2>
+        <p class="text-gray-500 mt-4 text-lg">
+          14 días gratis. Sin tarjeta de crédito. Cancela cuando quieras.
+        </p>
+      </div>
+      <div class="grid md:grid-cols-3 gap-8 max-w-5xl mx-auto">
+
+        <!-- Plan Básico -->
+        <div class="border-2 border-gray-200 rounded-3xl p-8 card-hover">
+          <div class="mb-6">
+            <p class="text-sm font-semibold text-gray-500 uppercase tracking-wider mb-2">Básico</p>
+            <div class="flex items-end gap-1">
+              <span class="text-4xl font-black text-gray-900">RD$2,500</span>
+              <span class="text-gray-400 mb-1">/mes</span>
+            </div>
+            <p class="text-gray-500 text-sm mt-1">≈ USD $43/mes</p>
+          </div>
+          <p class="text-gray-600 text-sm mb-6">Ideal para clínicas pequeñas con 1 médico y hasta 200 citas al mes.</p>
+          <ul class="space-y-3 mb-8">
+            <li class="check-item text-gray-700 text-sm">1 número de WhatsApp</li>
+            <li class="check-item text-gray-700 text-sm">Hasta 200 citas/mes</li>
+            <li class="check-item text-gray-700 text-sm">1 médico o profesional</li>
+            <li class="check-item text-gray-700 text-sm">Recordatorios automáticos</li>
+            <li class="check-item text-gray-700 text-sm">Dashboard básico</li>
+            <li class="check-item text-gray-700 text-sm">Soporte por WhatsApp</li>
+          </ul>
+          <a href="https://wa.me/18099567956?text=Hola,%20me%20interesa%20el%20Plan%20Básico%20de%20MediTurno%20IA"
+             target="_blank"
+             class="block text-center border-2 border-medical-500 text-medical-500 hover:bg-medical-500 hover:text-white font-bold py-3 rounded-xl transition-colors">
+            Empezar gratis 14 días
+          </a>
+        </div>
+
+        <!-- Plan Pro (destacado) -->
+        <div class="border-2 border-medical-500 rounded-3xl p-8 card-hover relative bg-gradient-to-b from-medical-50 to-white shadow-lg shadow-medical-100">
+          <div class="absolute -top-4 left-1/2 -translate-x-1/2">
+            <span class="bg-medical-500 text-white text-xs font-bold px-4 py-1.5 rounded-full">MÁS POPULAR</span>
+          </div>
+          <div class="mb-6">
+            <p class="text-sm font-semibold text-medical-500 uppercase tracking-wider mb-2">Pro</p>
+            <div class="flex items-end gap-1">
+              <span class="text-4xl font-black text-gray-900">RD$5,000</span>
+              <span class="text-gray-400 mb-1">/mes</span>
+            </div>
+            <p class="text-gray-500 text-sm mt-1">≈ USD $86/mes</p>
+          </div>
+          <p class="text-gray-600 text-sm mb-6">Para clínicas en crecimiento con múltiples médicos y alto volumen de citas.</p>
+          <ul class="space-y-3 mb-8">
+            <li class="check-item text-gray-700 text-sm">1 número de WhatsApp</li>
+            <li class="check-item text-gray-700 text-sm">Hasta 1,000 citas/mes</li>
+            <li class="check-item text-gray-700 text-sm">Hasta 5 médicos/especialistas</li>
+            <li class="check-item text-gray-700 text-sm">Recordatorios inteligentes</li>
+            <li class="check-item text-gray-700 text-sm">Dashboard avanzado + reportes</li>
+            <li class="check-item text-gray-700 text-sm">Reprogramación automática</li>
+            <li class="check-item text-gray-700 text-sm">Encuesta de satisfacción post-cita</li>
+            <li class="check-item text-gray-700 text-sm">Soporte prioritario</li>
+          </ul>
+          <a href="https://wa.me/18099567956?text=Hola,%20me%20interesa%20el%20Plan%20Pro%20de%20MediTurno%20IA"
+             target="_blank"
+             class="block text-center bg-medical-500 hover:bg-medical-600 text-white font-bold py-3 rounded-xl transition-colors">
+            Empezar gratis 14 días
+          </a>
+        </div>
+
+        <!-- Enterprise -->
+        <div class="border-2 border-gray-200 rounded-3xl p-8 card-hover bg-gray-900 text-white">
+          <div class="mb-6">
+            <p class="text-sm font-semibold text-gray-400 uppercase tracking-wider mb-2">Enterprise</p>
+            <div class="flex items-end gap-1">
+              <span class="text-3xl font-black text-white">Contactar</span>
+            </div>
+            <p class="text-gray-400 text-sm mt-1">Precio personalizado</p>
+          </div>
+          <p class="text-gray-400 text-sm mb-6">Cadenas de clínicas, hospitales y grupos médicos con necesidades especiales.</p>
+          <ul class="space-y-3 mb-8">
+            <li class="check-item text-gray-300 text-sm" style="--tw-check-color: #00CC66;">Citas ilimitadas</li>
+            <li class="check-item text-gray-300 text-sm">Múltiples sucursales</li>
+            <li class="check-item text-gray-300 text-sm">Médicos ilimitados</li>
+            <li class="check-item text-gray-300 text-sm">Integración con sistema de historias clínicas</li>
+            <li class="check-item text-gray-300 text-sm">API acceso completo</li>
+            <li class="check-item text-gray-300 text-sm">SLA 99.9% uptime</li>
+            <li class="check-item text-gray-300 text-sm">Gerente de cuenta dedicado</li>
+          </ul>
+          <a href="https://wa.me/18099567956?text=Hola,%20somos%20una%20cadena%20de%20clínicas%20y%20nos%20interesa%20MediTurno%20Enterprise"
+             target="_blank"
+             class="block text-center border-2 border-white/30 hover:border-white text-white font-bold py-3 rounded-xl transition-colors">
+            Hablar con ventas
+          </a>
+        </div>
+      </div>
+
+      <div class="mt-10 text-center">
+        <p class="text-gray-400 text-sm">
+          Tipo de cambio referencial: 1 USD = RD$58.5 · Todos los planes incluyen 14 días gratis · Sin tarjeta de crédito requerida
+        </p>
+      </div>
+    </div>
+  </section>
+
+  <!-- ── CTA FINAL ──────────────────────────────────────────────────────────── -->
+  <section class="py-20 px-4 sm:px-6 lg:px-8 gradient-hero text-white">
+    <div class="max-w-3xl mx-auto text-center">
+      <h2 class="text-4xl sm:text-5xl font-black mb-6 leading-tight">
+        Empieza hoy.<br/>
+        <span class="text-green-400">14 días gratis,</span><br/>
+        sin complicaciones.
+      </h2>
+      <p class="text-blue-100 text-xl mb-10 leading-relaxed">
+        Configura MediTurno IA en menos de 1 hora. Tu primer paciente puede agendar esta misma noche.
+      </p>
+      <a href="https://wa.me/18099567956?text=Hola!%20Quiero%20empezar%20a%20usar%20MediTurno%20IA%20en%20mi%20clínica"
+         target="_blank"
+         class="inline-flex items-center gap-3 gradient-cta hover:opacity-90 text-white font-bold px-10 py-5 rounded-2xl text-xl transition-opacity wa-pulse shadow-2xl">
+        <svg class="w-7 h-7" fill="currentColor" viewBox="0 0 24 24"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/></svg>
+        Prueba MediTurno IA gratis
+      </a>
+      <p class="text-blue-200 text-sm mt-5">
+        Sin contrato · Sin tarjeta de crédito · Cancela cuando quieras
+      </p>
+
+      <div class="mt-14 grid sm:grid-cols-3 gap-6 text-left">
+        <div class="bg-white/10 backdrop-blur-sm rounded-2xl p-5">
+          <p class="text-green-400 font-bold text-2xl mb-1">Paso 1</p>
+          <p class="text-white font-semibold mb-1">Envíanos un mensaje</p>
+          <p class="text-blue-200 text-sm">Escribe al WhatsApp y cuéntanos sobre tu clínica.</p>
+        </div>
+        <div class="bg-white/10 backdrop-blur-sm rounded-2xl p-5">
+          <p class="text-green-400 font-bold text-2xl mb-1">Paso 2</p>
+          <p class="text-white font-semibold mb-1">Configuramos juntos</p>
+          <p class="text-blue-200 text-sm">En 1 hora tu clínica, horarios y médicos están listos.</p>
+        </div>
+        <div class="bg-white/10 backdrop-blur-sm rounded-2xl p-5">
+          <p class="text-green-400 font-bold text-2xl mb-1">Paso 3</p>
+          <p class="text-white font-semibold mb-1">Tus pacientes agendan</p>
+          <p class="text-blue-200 text-sm">Activa MediTurno y observa cómo se llena tu agenda.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ── FOOTER ─────────────────────────────────────────────────────────────── -->
+  <footer class="bg-gray-900 text-gray-400 py-12 px-4 sm:px-6 lg:px-8">
+    <div class="max-w-6xl mx-auto">
+      <div class="grid md:grid-cols-3 gap-8 mb-8">
+        <div>
+          <div class="flex items-center gap-2 mb-4">
+            <span class="text-2xl">🏥</span>
+            <span class="text-white font-bold text-xl">MediTurno IA</span>
+          </div>
+          <p class="text-sm leading-relaxed">
+            Agendamiento de citas por WhatsApp para clínicas en República Dominicana y LATAM.
+          </p>
+        </div>
+        <div>
+          <h4 class="text-white font-semibold mb-4">Producto</h4>
+          <ul class="space-y-2 text-sm">
+            <li><a href="#como-funciona" class="hover:text-white transition-colors">Cómo funciona</a></li>
+            <li><a href="#beneficios" class="hover:text-white transition-colors">Beneficios</a></li>
+            <li><a href="#pricing" class="hover:text-white transition-colors">Precios</a></li>
+          </ul>
+        </div>
+        <div>
+          <h4 class="text-white font-semibold mb-4">Contacto</h4>
+          <ul class="space-y-2 text-sm">
+            <li>
+              <a href="https://wa.me/18099567956" target="_blank" class="hover:text-white transition-colors flex items-center gap-2">
+                <svg class="w-4 h-4 text-green-500" fill="currentColor" viewBox="0 0 24 24"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/></svg>
+                WhatsApp: +1 (809) 956-7956
+              </a>
+            </li>
+            <li><a href="mailto:hola@mediturno.ai" class="hover:text-white transition-colors">hola@mediturno.ai</a></li>
+          </ul>
+        </div>
+      </div>
+      <div class="border-t border-gray-800 pt-8 text-center text-sm">
+        <p>© 2026 MediTurno IA — MR ToolIAA · República Dominicana · Todos los derechos reservados</p>
+      </div>
+    </div>
+  </footer>
+
+</body>
+</html>
