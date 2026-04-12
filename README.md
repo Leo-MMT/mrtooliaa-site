@@ -63,7 +63,11 @@ mrtooliaa-site/
 ├── ferretquote/
 │   └── index.html      ← Landing Ferret-Quote Bot
 ├── assets/
-│   └── logo_mrtooliaa.png
+│   ├── logo-mrtooliaa.png         ← Logo MR ToolIAA (color)
+│   ├── logo-mrtooliaa-mono.png    ← Logo MR ToolIAA (B&W)
+│   ├── logo-mediturno.png         ← Logo MediTurno (con texto)
+│   ├── logo-mediturno-icon.png    ← Ícono MediTurno
+│   └── logo-ferretquote-icon.png  ← Ícono Ferret-Quote
 ├── _headers            ← Headers HTTP (cache + seguridad)
 └── README.md
 ```
@@ -74,5 +78,6 @@ mrtooliaa-site/
 - [ ] `https://mrtooliaa.com/mediturno` carga la landing MediTurno
 - [ ] `https://mrtooliaa.com/ferretquote` carga la landing Ferret-Quote
 - [ ] Links "← MR ToolIAA" en product pages vuelven a `/`
-- [ ] Logo `/assets/logo_mrtooliaa.png` carga en las 3 páginas
+- [ ] Logos de producto cargan en las tarjetas (MediTurno, Ferret-Quote)
+- [ ] Logo MR ToolIAA carga en navbar y footer
 - [ ] HTTPS activo (candado verde en browser)
