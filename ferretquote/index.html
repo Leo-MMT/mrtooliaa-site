@@ -5,11 +5,28 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Ferret-Quote Bot — Tu ferretería cotiza en segundos por WhatsApp</title>
   <meta name="description" content="Bot de cotización automática por WhatsApp para ferreterías en República Dominicana. Responde precios al instante, genera PDFs profesionales y nunca pierde una venta." />
+  <meta name="keywords" content="cotización ferretería whatsapp, bot ferretería, ferret-quote, automatización ferretería RD, cotizaciones automáticas dominicana" />
+  <meta name="author" content="MR ToolIAA" />
   <meta name="robots" content="index, follow" />
+  <meta name="theme-color" content="#f97316" />
+  <link rel="canonical" href="https://mrtooliaa.com/ferretquote/" />
+
+  <meta property="og:type" content="website" />
+  <meta property="og:url" content="https://mrtooliaa.com/ferretquote/" />
+  <meta property="og:site_name" content="Ferret-Quote Bot" />
+  <meta property="og:locale" content="es_DO" />
   <meta property="og:title" content="Ferret-Quote Bot — Cotizaciones automáticas por WhatsApp" />
   <meta property="og:description" content="Tu ferretería cotiza en segundos. El cliente pregunta, el bot responde con PDF profesional al instante." />
-  <meta property="og:type" content="website" />
-  <meta property="og:locale" content="es_DO" />
+  <meta property="og:image" content="https://mrtooliaa.com/assets/logo-ferretquote-icon.png" />
+  <meta property="og:image:alt" content="Ferret-Quote Bot — Cotizaciones automáticas por WhatsApp" />
+
+  <meta name="twitter:card" content="summary_large_image" />
+  <meta name="twitter:title" content="Ferret-Quote Bot — Cotizaciones automáticas por WhatsApp" />
+  <meta name="twitter:description" content="Tu ferretería cotiza en segundos. El bot responde con PDF profesional al instante." />
+  <meta name="twitter:image" content="https://mrtooliaa.com/assets/logo-ferretquote-icon.png" />
+
+  <link rel="icon" type="image/png" href="/assets/logo-ferretquote-icon.png" />
+  <link rel="apple-touch-icon" href="/assets/logo-ferretquote-icon.png" />
 
   <!-- Schema.org SoftwareApplication -->
   <script type="application/ld+json">
@@ -57,36 +74,13 @@
   }
   </script>
 
-  <!-- Tailwind CSS CDN -->
-  <script src="https://cdn.tailwindcss.com"></script>
-  <script>
-    tailwind.config = {
-      theme: {
-        extend: {
-          colors: {
-            primary: '#f97316',
-            'primary-dark': '#ea6c0a',
-            'primary-light': '#fdba74',
-            secondary: '#374151',
-            'secondary-dark': '#1f2937',
-            hardware: '#78350f',
-          },
-          fontFamily: {
-            sans: ['Inter', 'system-ui', 'sans-serif'],
-          },
-          boxShadow: {
-            'heavy': '0 8px 32px rgba(0,0,0,0.18)',
-            'card': '0 4px 16px rgba(0,0,0,0.10)',
-          }
-        }
-      }
-    }
-  </script>
-
   <!-- Google Fonts: Inter -->
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&display=swap" rel="stylesheet" />
+
+  <!-- Tailwind (compiled) -->
+  <link rel="stylesheet" href="/assets/tailwind.css" />
 
   <style>
     /* ---- Base reset & scrolling ---- */
@@ -293,7 +287,7 @@
       <div class="flex items-center justify-between h-16">
         <!-- Logo -->
         <a href="#hero" class="flex items-center gap-3 group">
-          <img src="/assets/logo-ferretquote-icon.png" alt="Ferret-Quote Bot" class="h-9 w-auto">
+          <img src="/assets/logo-ferretquote-icon.png" alt="Ferret-Quote Bot" width="48" height="48" fetchpriority="high" decoding="async" class="h-12 w-auto">
           <div class="leading-tight hidden sm:block">
             <span class="text-white font-black text-lg tracking-tight">Ferret-Quote</span>
             <span class="text-primary font-black text-lg tracking-tight"> Bot</span>
@@ -1169,7 +1163,7 @@
         <!-- Brand column -->
         <div>
           <div class="flex items-center gap-3 mb-4">
-            <img src="/assets/logo-ferretquote-icon.png" alt="Ferret-Quote Bot" class="h-10 w-auto">
+            <img src="/assets/logo-ferretquote-icon.png" alt="Ferret-Quote Bot" width="48" height="48" loading="lazy" decoding="async" class="h-12 w-auto">
             <div>
               <span class="text-white font-black text-lg">Ferret-Quote</span>
               <span class="text-primary font-black text-lg"> Bot</span>

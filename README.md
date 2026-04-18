@@ -3,9 +3,44 @@
 Sitio estático de MR ToolIAA — 3 landings consolidadas para deploy en Cloudflare Pages.
 
 ```
-mrtooliaa.com/             → Landing empresa MR ToolIAA
-mrtooliaa.com/mediturno    → Landing MediTurno IA
-mrtooliaa.com/ferretquote  → Landing Ferret-Quote Bot
+mrtooliaa.com/              → Landing empresa MR ToolIAA
+mrtooliaa.com/mediturno/    → Landing MediTurno IA
+mrtooliaa.com/ferretquote/  → Landing Ferret-Quote Bot
+```
+
+---
+
+## Stack actual
+
+- HTML estático + Tailwind CSS **compilado** (sin CDN runtime)
+- Icons SVG inline (Lucide-style) en hot spots; emojis en zonas decorativas
+- Fuentes: Inter (Google Fonts, con `preconnect`)
+- Deploy: Cloudflare Pages (build step opcional — ver más abajo)
+
+---
+
+## Desarrollo local
+
+### 1. Instalar dependencias
+
+```bash
+npm install
+```
+
+### 2. Compilar Tailwind
+
+```bash
+npm run build:css     # One-shot: src/input.css → assets/tailwind.css (minified)
+npm run watch:css     # Watch mode durante desarrollo
+```
+
+La salida queda en `assets/tailwind.css` y ya está commiteada — así el deploy en Cloudflare Pages no necesita ejecutar un build step.
+
+### 3. Servir localmente
+
+```bash
+python3 -m http.server 8787
+# abre http://localhost:8787
 ```
 
 ---
@@ -18,38 +53,29 @@ mrtooliaa.com/ferretquote  → Landing Ferret-Quote Bot
 2. Click **Connect to Git** → autoriza GitHub → selecciona el repo `mrtooliaa-site`
 3. Configuración de build:
    - **Framework preset:** None
-   - **Build command:** *(dejar vacío — sitio estático puro)*
-   - **Build output directory:** `/` *(raíz del repo)*
-4. Click **Save and Deploy**
+   - **Build command:** *(vacío — el CSS ya está compilado en `assets/tailwind.css`)*
+   - **Build output directory:** `/`
 
 Cloudflare Pages despliega automáticamente en cada push a `main`.
 
----
+> **Nota:** si prefieres que CF compile el CSS en el servidor, usa:
+> - Build command: `npm install && npm run build:css`
+> - Build output: `/`
 
 ### 2. Configurar dominio custom `mrtooliaa.com`
 
 1. En Cloudflare Pages → tu proyecto → **Custom domains** → **Set up a custom domain**
 2. Ingresa `mrtooliaa.com` → Click **Continue**
-3. Cloudflare te mostrará los nameservers a configurar (ej: `ns1.cloudflare.com`, `ns2.cloudflare.com`)
-
----
 
 ### 3. Cambiar nameservers en Namecheap
 
 1. Entra a [namecheap.com](https://namecheap.com) → **Domain List** → `mrtooliaa.com` → **Manage**
-2. En **Nameservers**, selecciona **Custom DNS**
-3. Ingresa los 2 nameservers que te dio Cloudflare (paso anterior)
-4. Click **Save** ✓
-
-La propagación toma entre 5 minutos y 48 horas (usualmente <30 min con Cloudflare).
-
----
+2. En **Nameservers**, selecciona **Custom DNS** e ingresa los que Cloudflare te dio
+3. Propagación: 5 min – 48 h
 
 ### 4. SSL/HTTPS
 
-Cloudflare genera el certificado SSL automáticamente una vez que los nameservers propagan. No requiere configuración manual.
-
-Para forzar HTTPS: Cloudflare Dashboard → tu dominio → **SSL/TLS** → **Edge Certificates** → activar **Always Use HTTPS**.
+Cloudflare genera el certificado SSL automáticamente. Para forzar HTTPS: Dashboard → SSL/TLS → Edge Certificates → **Always Use HTTPS**.
 
 ---
 
@@ -57,27 +83,73 @@ Para forzar HTTPS: Cloudflare Dashboard → tu dominio → **SSL/TLS** → **Edg
 
 ```
 mrtooliaa-site/
-├── index.html          ← Landing MR ToolIAA (raíz)
+├── index.html              ← Landing MR ToolIAA (raíz)
 ├── mediturno/
-│   └── index.html      ← Landing MediTurno IA
+│   └── index.html          ← Landing MediTurno IA
 ├── ferretquote/
-│   └── index.html      ← Landing Ferret-Quote Bot
+│   └── index.html          ← Landing Ferret-Quote Bot
 ├── assets/
-│   ├── logo-mrtooliaa.png         ← Logo MR ToolIAA (color)
-│   ├── logo-mrtooliaa-mono.png    ← Logo MR ToolIAA (B&W)
-│   ├── logo-mediturno.png         ← Logo MediTurno (con texto)
-│   ├── logo-mediturno-icon.png    ← Ícono MediTurno
-│   └── logo-ferretquote-icon.png  ← Ícono Ferret-Quote
-├── _headers            ← Headers HTTP (cache + seguridad)
+│   ├── logo-*.png          ← Logos
+│   └── tailwind.css        ← CSS compilado (commited)
+├── src/
+│   └── input.css           ← Fuente Tailwind (@tailwind directives)
+├── tailwind.config.js      ← Colores, fonts, safelist
+├── package.json            ← Scripts build/watch
+├── _headers                ← CSP, HSTS, cache, security
+├── sitemap.xml             ← SEO
+├── robots.txt              ← SEO
 └── README.md
 ```
+
+---
+
+## Seguridad
+
+El archivo `_headers` aplica (vía Cloudflare Pages):
+
+- **CSP** estricta (`default-src 'self'` con whitelist mínima de Google Fonts)
+- **HSTS** `max-age=31536000; includeSubDomains; preload`
+- `X-Frame-Options: DENY`, `X-Content-Type-Options: nosniff`
+- `Referrer-Policy: strict-origin-when-cross-origin`
+- `Permissions-Policy` restrictiva (cámara, micrófono, geo, FLoC desactivados)
+- Cache-Control diferenciado: immutable para assets, revalidate para HTML
+
+---
+
+## SEO
+
+- Sitemap XML en `/sitemap.xml`
+- `robots.txt` con referencia al sitemap
+- OpenGraph + Twitter Card tags completos en las 3 landings
+- Canonical URLs
+- Schema.org JSON-LD: `Organization` (home), `SoftwareApplication` (MediTurno, Ferret-Quote)
+- `theme-color` por landing (navy / medical / primary)
+
+---
+
+## Roadmap — migración a Astro
+
+El sitio está estructurado para una migración futura a [Astro](https://astro.build) sin fricción:
+
+1. **Componentes**: las 3 landings comparten navbar, footer y CTA WhatsApp — candidatos naturales a `<Nav />`, `<Footer />`, `<WhatsAppCTA />`.
+2. **Layouts**: un `BaseLayout.astro` puede envolver los `<head>` (OG, preconnect, CSP-compatible script tags).
+3. **Contenido**: textos de producto y features → YAML/TS data files → map en componentes.
+4. **Tailwind**: ya está en v3 con config compartida — `@astrojs/tailwind` lo lee directamente.
+5. **Deploy**: CF Pages soporta Astro out-of-the-box — solo cambia build command a `npm run build`.
+
+Archivos que **NO** requieren cambio en la migración: `_headers`, `sitemap.xml`, `robots.txt`, `assets/*.png`.
+
+---
 
 ## Verificación post-deploy
 
 - [ ] `https://mrtooliaa.com` carga la landing empresa
-- [ ] `https://mrtooliaa.com/mediturno` carga la landing MediTurno
-- [ ] `https://mrtooliaa.com/ferretquote` carga la landing Ferret-Quote
+- [ ] `https://mrtooliaa.com/mediturno/` carga la landing MediTurno
+- [ ] `https://mrtooliaa.com/ferretquote/` carga la landing Ferret-Quote
 - [ ] Links "← MR ToolIAA" en product pages vuelven a `/`
 - [ ] Logos de producto cargan en las tarjetas (MediTurno, Ferret-Quote)
 - [ ] Logo MR ToolIAA carga en navbar y footer
 - [ ] HTTPS activo (candado verde en browser)
+- [ ] `curl -I https://mrtooliaa.com` devuelve CSP + HSTS headers
+- [ ] `https://mrtooliaa.com/sitemap.xml` accesible
+- [ ] Lighthouse score ≥ 95 en las 3 landings (Performance + SEO + Best Practices)
