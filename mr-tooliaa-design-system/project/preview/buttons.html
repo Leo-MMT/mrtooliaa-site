@@ -1,0 +1,31 @@
+<!doctype html><html><head><meta charset="utf-8"><title>Buttons</title>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
+<style>
+*{box-sizing:border-box;margin:0;padding:0}
+html,body{font-family:'Inter',system-ui,sans-serif;background:#fff;color:#0d1a2d;-webkit-font-smoothing:antialiased}
+body{padding:20px}
+.row{display:flex;gap:12px;flex-wrap:wrap;align-items:center;margin-bottom:12px}
+.btn{font-family:inherit;font-weight:700;border:0;cursor:pointer;border-radius:9999px;padding:14px 26px;font-size:15px;transition:all .2s}
+.primary{background:linear-gradient(135deg,#f97316 0%,#ea580c 100%);color:#fff;box-shadow:0 10px 25px rgba(249,115,22,.35)}
+.primary:hover{opacity:.92}
+.secondary{background:#1e3a5f;color:#fff}
+.secondary:hover{background:#182f4e}
+.ghost{background:transparent;color:#fff;border:1.5px solid rgba(255,255,255,.4)}
+.outline{background:transparent;color:#1e3a5f;border:2px solid #1e3a5f;font-weight:800}
+.wa{background:#25d366;color:#fff;box-shadow:0 6px 20px rgba(37,211,102,.4);display:inline-flex;align-items:center;gap:8px}
+.wa svg{width:18px;height:18px}
+.dark{background:#0d1a2d;padding:14px;border-radius:12px}
+.lbl{font-size:10px;font-weight:800;letter-spacing:.08em;text-transform:uppercase;color:#6b7280;margin-bottom:6px}
+</style></head>
+<body>
+<div class="lbl">Primary · Secondary · Outline · WhatsApp</div>
+<div class="row">
+  <button class="btn primary">Hablar con un experto</button>
+  <button class="btn secondary">Conocer MediTurno →</button>
+  <button class="btn outline">Empezar →</button>
+  <button class="btn wa"><svg fill="currentColor" viewBox="0 0 24 24"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347M12 2C6.48 2 2 6.48 2 12c0 1.89.52 3.66 1.42 5.17L2 22l4.95-1.3A9.953 9.953 0 0012 22c5.52 0 10-4.48 10-10S17.52 2 12 2z"/></svg>Prueba gratis 14 días</button>
+</div>
+<div class="dark">
+  <button class="btn ghost">Hablar con un experto</button>
+</div>
+</body></html>

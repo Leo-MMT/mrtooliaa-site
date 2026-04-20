@@ -1,0 +1,116 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<title>MR ToolIAA · Design System Hub</title>
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
+<style>
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  body { font-family: 'Inter', system-ui, sans-serif; background: #0a0a0a; color: #fff; -webkit-font-smoothing: antialiased; min-height: 100vh; padding: 48px 24px; }
+  .wrap { max-width: 1100px; margin: 0 auto; }
+  header { margin-bottom: 56px; }
+  .eyebrow { color: #9ca3af; font-size: 12px; font-weight: 700; text-transform: uppercase; letter-spacing: .12em; margin-bottom: 10px; }
+  h1 { font-size: 56px; font-weight: 900; line-height: 1.02; letter-spacing: -.02em; margin-bottom: 16px; }
+  h1 em { font-style: normal; background: linear-gradient(135deg,#0066CC,#f97316); -webkit-background-clip: text; background-clip: text; color: transparent; }
+  .sub { color: #9ca3af; font-size: 17px; max-width: 620px; line-height: 1.55; }
+
+  .grid { display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 20px; margin-top: 40px; }
+  @media (max-width: 900px) { .grid { grid-template-columns: 1fr; } }
+
+  .card { position: relative; border-radius: 20px; padding: 32px; text-decoration: none; color: inherit; overflow: hidden; min-height: 320px; display: flex; flex-direction: column; justify-content: space-between; transition: transform .25s, box-shadow .25s; border: 1px solid rgba(255,255,255,.08); }
+  .card:hover { transform: translateY(-6px); }
+  .card .tag { font-size: 11px; font-weight: 800; text-transform: uppercase; letter-spacing: .1em; padding: 5px 10px; border-radius: 6px; display: inline-block; margin-bottom: 14px; }
+  .card h2 { font-size: 28px; font-weight: 900; line-height: 1.05; letter-spacing: -.01em; margin-bottom: 8px; }
+  .card p { font-size: 14px; line-height: 1.5; opacity: .85; }
+  .card .meta { display: flex; gap: 6px; flex-wrap: wrap; margin-top: 16px; }
+  .card .meta span { font-size: 11px; padding: 4px 9px; border-radius: 999px; background: rgba(255,255,255,.12); font-weight: 600; }
+  .card .arrow { position: absolute; top: 28px; right: 28px; width: 36px; height: 36px; border-radius: 50%; background: rgba(255,255,255,.12); display: flex; align-items: center; justify-content: center; transition: transform .25s; }
+  .card:hover .arrow { transform: translate(4px, -4px); background: rgba(255,255,255,.2); }
+
+  /* Card variants */
+  .c-corp { background: linear-gradient(135deg,#111827 0%, #1f2937 100%); }
+  .c-corp .tag { background: rgba(255,255,255,.1); color: #fff; }
+  .c-corp:hover { box-shadow: 0 20px 40px rgba(0,0,0,.5); }
+  .c-corp .swatch { display: flex; gap: 4px; margin-top: 18px; }
+  .c-corp .swatch i { width: 24px; height: 24px; border-radius: 4px; }
+
+  .c-med { background: linear-gradient(135deg, #003d7a 0%, #0066CC 50%, #0088ff 100%); }
+  .c-med .tag { background: rgba(255,255,255,.18); color: #fff; }
+  .c-med:hover { box-shadow: 0 20px 40px rgba(0,102,204,.35); }
+
+  .c-ferret { background: #1f2937; background-image: repeating-linear-gradient(45deg, rgba(255,255,255,.02) 0, rgba(255,255,255,.02) 2px, transparent 2px, transparent 12px); border: 1px solid #374151; }
+  .c-ferret .tag { background: #f97316; color: #fff; }
+  .c-ferret:hover { box-shadow: 0 20px 40px rgba(249,115,22,.3); }
+  .c-ferret .stripe { position: absolute; top: 0; left: 0; right: 0; height: 5px; background: repeating-linear-gradient(-45deg,#f97316,#f97316 10px,#ea6c0a 10px,#ea6c0a 20px); }
+
+  .tokens { margin-top: 64px; padding-top: 48px; border-top: 1px solid rgba(255,255,255,.08); }
+  .tokens h3 { font-size: 14px; font-weight: 800; text-transform: uppercase; letter-spacing: .1em; color: #9ca3af; margin-bottom: 20px; }
+  .palette { display: grid; grid-template-columns: repeat(6,1fr); gap: 12px; }
+  .sw { border-radius: 10px; overflow: hidden; background: #111; border: 1px solid rgba(255,255,255,.06); }
+  .sw .chip { height: 72px; }
+  .sw .label { padding: 10px 12px; }
+  .sw .label .n { font-size: 12px; font-weight: 700; }
+  .sw .label .h { font-size: 11px; color: #9ca3af; font-family: ui-monospace, Menlo, monospace; margin-top: 2px; }
+
+  footer { margin-top: 64px; padding-top: 24px; border-top: 1px solid rgba(255,255,255,.08); color: #6b7280; font-size: 13px; }
+</style>
+</head>
+<body>
+<div class="wrap">
+  <header>
+    <div class="eyebrow">MR ToolIAA · Sistema de diseño</div>
+    <h1>Un ecosistema, <em>tres voces.</em></h1>
+    <p class="sub">La marca sombrilla es sobria y profesional; cada producto hereda su estructura pero adopta un tono propio — el azul médico de MediTurno y el naranja industrial de Ferret-Quote. Cada kit incluye componentes React listos para producción.</p>
+  </header>
+
+  <div class="grid">
+    <a class="card c-corp" href="ui_kits/mrtooliaa/index.html">
+      <div class="arrow">↗</div>
+      <div>
+        <span class="tag">Paraguas · Corporativo</span>
+        <h2>MR ToolIAA</h2>
+        <p>Agencia de automatización IA. Slate + acento naranja. Cards con glow cálido y CTAs directos.</p>
+        <div class="swatch"><i style="background:#0a0a0a"></i><i style="background:#1f2937"></i><i style="background:#f97316"></i><i style="background:#fff;border:1px solid #333"></i></div>
+      </div>
+      <div class="meta"><span>Navbar</span><span>Hero</span><span>Products</span><span>Footer</span></div>
+    </a>
+
+    <a class="card c-med" href="ui_kits/mediturno/index.html">
+      <div class="arrow">↗</div>
+      <div>
+        <span class="tag">Producto · Salud</span>
+        <h2>MediTurno IA</h2>
+        <p>Bot de citas por WhatsApp. Azul médico + verde WhatsApp. Calidez clínica, mockup de chat interactivo.</p>
+      </div>
+      <div class="meta"><span>Hero</span><span>ChatMockup</span><span>Benefits</span><span>Pricing</span></div>
+    </a>
+
+    <a class="card c-ferret" href="ui_kits/ferretquote/index.html">
+      <div class="stripe"></div>
+      <div class="arrow">↗</div>
+      <div>
+        <span class="tag">Producto · Retail</span>
+        <h2>Ferret-Quote</h2>
+        <p>Bot de cotización para ferreterías. Naranja construcción + slate. Texturas diagonales y PDF flotante.</p>
+      </div>
+      <div class="meta"><span>Hero</span><span>PDF Demo</span><span>HowItWorks</span><span>Pricing</span></div>
+    </a>
+  </div>
+
+  <div class="tokens">
+    <h3>Paleta compartida</h3>
+    <div class="palette">
+      <div class="sw"><div class="chip" style="background:#0a0a0a"></div><div class="label"><div class="n">Ink</div><div class="h">#0A0A0A</div></div></div>
+      <div class="sw"><div class="chip" style="background:#1f2937"></div><div class="label"><div class="n">Slate</div><div class="h">#1F2937</div></div></div>
+      <div class="sw"><div class="chip" style="background:#f97316"></div><div class="label"><div class="n">Orange</div><div class="h">#F97316</div></div></div>
+      <div class="sw"><div class="chip" style="background:#0066CC"></div><div class="label"><div class="n">Medical</div><div class="h">#0066CC</div></div></div>
+      <div class="sw"><div class="chip" style="background:#00CC66"></div><div class="label"><div class="n">WA Green</div><div class="h">#00CC66</div></div></div>
+      <div class="sw"><div class="chip" style="background:#fafafa"></div><div class="label"><div class="n">Canvas</div><div class="h">#FAFAFA</div></div></div>
+    </div>
+  </div>
+
+  <footer>Tipografía: Inter 400–900 · Radio base: 10px · Todos los kits comparten gramática de botones (wa-pulse) y mockups de WhatsApp.</footer>
+</div>
+</body>
+</html>

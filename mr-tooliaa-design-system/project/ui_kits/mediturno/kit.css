@@ -1,0 +1,14 @@
+/* MediTurno IA kit */
+* { box-sizing: border-box; margin: 0; padding: 0; }
+html, body { font-family: 'Inter', system-ui, sans-serif; color: #1f2937; background: #fff; -webkit-font-smoothing: antialiased; }
+.gradient-med { background: linear-gradient(135deg, #003d7a 0%, #0066CC 50%, #0088ff 100%); }
+.gradient-wa { background: linear-gradient(135deg, #00aa55 0%, #00CC66 100%); }
+.container { max-width: 1152px; margin: 0 auto; padding: 0 24px; }
+.btn { display: inline-flex; align-items: center; gap: 8px; font-family: inherit; font-weight: 700; border: 0; cursor: pointer; text-decoration: none; border-radius: 12px; padding: 14px 24px; font-size: 15px; transition: all .2s; }
+.btn-wa { background: linear-gradient(135deg,#00aa55,#00CC66); color: #fff; box-shadow: 0 6px 24px rgba(37,211,102,.45); font-weight: 800; animation: waPulse 2s infinite; }
+@keyframes waPulse { 0%,100% { box-shadow: 0 0 0 0 rgba(0,204,102,.5); } 50% { box-shadow: 0 0 0 12px rgba(0,204,102,0); } }
+.btn-ghost { background: transparent; color: #fff; border: 2px solid rgba(255,255,255,.4); }
+.btn-ghost:hover { border-color: #fff; }
+.dot-pulse { width: 8px; height: 8px; border-radius: 999px; background: #4ade80; animation: dot 2s infinite; }
+@keyframes dot { 0%,100% { opacity: 1; } 50% { opacity: .5; } }
+.chip-online { display: inline-flex; align-items: center; gap: 8px; background: rgba(255,255,255,.15); backdrop-filter: blur(6px); border-radius: 999px; padding: 6px 16px; font-size: 13px; font-weight: 500; color: #fff; }

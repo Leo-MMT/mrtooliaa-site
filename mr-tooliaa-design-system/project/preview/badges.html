@@ -1,0 +1,37 @@
+<!doctype html><html><head><meta charset="utf-8"><title>Badges</title>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
+<style>
+*{box-sizing:border-box;margin:0;padding:0}
+html,body{font-family:'Inter',system-ui,sans-serif;background:#fff;color:#0d1a2d;-webkit-font-smoothing:antialiased}
+body{padding:20px}
+.row{display:flex;gap:10px;flex-wrap:wrap;margin-bottom:12px;align-items:center}
+.b{display:inline-flex;align-items:center;gap:6px;font-weight:800;font-size:12px;padding:5px 12px;border-radius:9999px}
+.step{font-size:11px;font-weight:900;letter-spacing:.08em;padding:5px 12px;border-radius:9999px;background:#1e3a5f;color:#fff}
+.pulse{display:inline-flex;align-items:center;gap:6px;font-size:13px;font-weight:500;color:#fff;background:rgba(255,255,255,.12);border:1px solid rgba(255,255,255,.18);padding:6px 14px;border-radius:9999px}
+.pulse .d{width:8px;height:8px;background:#4ade80;border-radius:999px}
+.dark{background:#0d1a2d;padding:14px;border-radius:12px}
+.lbl{font-size:10px;font-weight:800;letter-spacing:.08em;text-transform:uppercase;color:#6b7280;margin:8px 0 6px}
+</style></head>
+<body>
+<div class="lbl">Semantic</div>
+<div class="row">
+  <span class="b" style="background:#fee2e2;color:#dc2626">❌ Problema actual</span>
+  <span class="b" style="background:#f97316;color:#fff">→ La solución</span>
+  <span class="b" style="background:#dcfce7;color:#15803d">✅ Resultado</span>
+  <span class="b" style="background:#dbeafe;color:#1d4ed8">Para Clínicas</span>
+  <span class="b" style="background:#ffedd5;color:#c2410c">Para Ferreterías</span>
+  <span class="b" style="background:#dcfce7;color:#15803d">ACTIVO</span>
+</div>
+<div class="lbl">Steps</div>
+<div class="row">
+  <span class="step">PASO 1</span>
+  <span class="step" style="background:#f97316">PASO 2</span>
+  <span class="step" style="background:#16a34a">PASO 3</span>
+  <span class="step" style="background:#f97316;font-size:11px">MÁS POPULAR</span>
+</div>
+<div class="lbl">Status (on dark)</div>
+<div class="dark row">
+  <span class="pulse"><span class="d"></span>Disponible 24/7 en WhatsApp</span>
+  <span class="pulse"><span class="d" style="background:#f97316"></span>13 agentes activos</span>
+</div>
+</body></html>

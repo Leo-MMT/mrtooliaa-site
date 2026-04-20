@@ -1,0 +1,23 @@
+<!doctype html><html><head><meta charset="utf-8"><title>Pricing</title>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
+<style>
+*{box-sizing:border-box;margin:0;padding:0}
+html,body{font-family:'Inter',system-ui,sans-serif;background:#f8fafc;color:#0d1a2d;-webkit-font-smoothing:antialiased}
+body{padding:20px;display:grid;grid-template-columns:1fr 1fr 1fr;gap:12px;align-items:center}
+.c{background:#fff;border-radius:16px;padding:16px;border:1px solid #f1f5f9;box-shadow:0 4px 12px rgba(0,0,0,.05)}
+.tier{font-size:10px;font-weight:800;letter-spacing:.08em;text-transform:uppercase;color:#1e3a5f;margin-bottom:8px}
+.price{font-size:22px;font-weight:900;color:#0d1a2d}
+.per{font-size:11px;color:#9ca3af}
+.pop{border:2.5px solid #f97316;transform:scale(1.04);position:relative;box-shadow:0 14px 30px rgba(249,115,22,.15)}
+.pop::before{content:'MÁS POPULAR';position:absolute;top:-10px;left:50%;transform:translateX(-50%);background:#f97316;color:#fff;font-size:9px;font-weight:900;letter-spacing:.1em;padding:3px 10px;border-radius:9999px;white-space:nowrap}
+.pop .tier{color:#f97316}
+.ent{background:#1e3a5f;color:#fff;border:0}
+.ent .price,.ent .tier{color:#fff}
+.ent .tier{color:#f97316}
+.ent .per{color:rgba(255,255,255,.4)}
+</style></head>
+<body>
+<div class="c"><div class="tier">Starter</div><div class="price">RD$15,000</div><div class="per">por mes</div></div>
+<div class="c pop"><div class="tier">Pro</div><div class="price">RD$35,000</div><div class="per">por mes</div></div>
+<div class="c ent"><div class="tier">Enterprise</div><div class="price">Cotización</div><div class="per">personalizada</div></div>
+</body></html>

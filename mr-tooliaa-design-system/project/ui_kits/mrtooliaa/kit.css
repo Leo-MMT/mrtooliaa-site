@@ -1,0 +1,36 @@
+/* MR ToolIAA corporate — shared kit styles */
+:root {
+  --navy-800: #0d1a2d;
+  --navy-700: #12233c;
+  --navy-600: #182f4e;
+  --navy-500: #1e3a5f;
+  --brand-500: #f97316;
+  --brand-600: #ea6a08;
+  --brand-400: #fb923c;
+  --wa: #25d366;
+}
+* { box-sizing: border-box; margin: 0; padding: 0; }
+html, body {
+  font-family: 'Inter', system-ui, -apple-system, sans-serif;
+  color: #1f2937;
+  -webkit-font-smoothing: antialiased;
+  background: #fff;
+}
+.gradient-hero { background: linear-gradient(135deg, #0d1a2d 0%, #1e3a5f 55%, #2a5298 100%); }
+.gradient-cta  { background: linear-gradient(135deg, #f97316 0%, #ea580c 100%); }
+.gradient-section { background: linear-gradient(180deg, #f8fafc 0%, #f1f5f9 100%); }
+.card-hover { transition: transform .2s ease, box-shadow .2s ease; }
+.card-hover:hover { transform: translateY(-4px); box-shadow: 0 20px 40px rgba(0,0,0,.12); }
+.eyebrow { color: var(--brand-500); font-weight: 800; font-size: 13px; text-transform: uppercase; letter-spacing: .05em; }
+.btn { display: inline-flex; align-items: center; gap: 8px; border: 0; cursor: pointer; font-family: inherit; font-weight: 700; border-radius: 9999px; padding: 12px 22px; font-size: 15px; transition: all .2s; text-decoration: none; }
+.btn-cta { background: linear-gradient(135deg,#f97316,#ea580c); color: #fff; box-shadow: 0 10px 25px rgba(249,115,22,.3); font-weight: 800; }
+.btn-cta:hover { opacity: .92; box-shadow: 0 14px 32px rgba(249,115,22,.5); }
+.btn-ghost { background: transparent; color: #fff; border: 1.5px solid rgba(255,255,255,.35); }
+.btn-ghost:hover { background: rgba(255,255,255,.08); }
+.btn-nav { background: var(--brand-500); color: #fff; font-size: 13px; padding: 10px 18px; box-shadow: 0 6px 16px rgba(249,115,22,.25); }
+.btn-nav:hover { background: var(--brand-600); }
+.btn-navy { background: var(--navy-500); color: #fff; }
+.btn-navy:hover { background: var(--navy-600); }
+.pulse-dot { width: 8px; height: 8px; border-radius: 999px; background: #4ade80; animation: p 2s infinite; }
+@keyframes p { 0%,100% { opacity: 1; } 50% { opacity: .55; } }
+.container { max-width: 1152px; margin: 0 auto; padding: 0 24px; }

@@ -1,0 +1,20 @@
+/* Ferret-Quote kit — industrial orange + slate */
+* { box-sizing: border-box; margin: 0; padding: 0; }
+html, body { font-family: 'Inter', system-ui, sans-serif; color: #1f2937; background: #fff; -webkit-font-smoothing: antialiased; }
+.container { max-width: 1152px; margin: 0 auto; padding: 0 24px; }
+
+.hero-bg {
+  background-color: #1f2937;
+  background-image: repeating-linear-gradient(45deg, rgba(255,255,255,.02) 0, rgba(255,255,255,.02) 2px, transparent 2px, transparent 12px);
+}
+.stripe-accent {
+  background: repeating-linear-gradient(-45deg, #f97316, #f97316 10px, #ea6c0a 10px, #ea6c0a 20px);
+}
+.btn { display: inline-flex; align-items: center; gap: 8px; font-family: inherit; font-weight: 800; cursor: pointer; text-decoration: none; border-radius: 10px; padding: 14px 22px; font-size: 15px; border: 0; transition: all .18s; }
+.btn-orange { background: #f97316; color: #fff; box-shadow: 0 6px 18px rgba(249,115,22,.35); }
+.btn-orange:hover { background: #ea580c; transform: translateY(-2px); }
+.btn-dark { background: #111827; color: #fff; border: 2px solid #f97316; }
+.btn-outline { background: transparent; color: #fff; border: 2px solid rgba(255,255,255,.3); }
+.badge { display: inline-flex; align-items: center; gap: 6px; background: rgba(249,115,22,.15); color: #fdba74; padding: 6px 14px; border-radius: 999px; font-size: 12px; font-weight: 700; text-transform: uppercase; letter-spacing: .05em; border: 1px solid rgba(249,115,22,.3); }
+.wa-float { position: fixed; bottom: 28px; right: 28px; z-index: 999; display: flex; align-items: center; gap: 10px; background: #25d366; color: #fff; padding: 14px 22px; border-radius: 999px; font-weight: 800; font-size: 14px; box-shadow: 0 6px 24px rgba(37,211,102,.45); text-decoration: none; transition: transform .2s; }
+.wa-float:hover { transform: translateY(-3px) scale(1.04); }
