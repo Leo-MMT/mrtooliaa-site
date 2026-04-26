@@ -1,0 +1,17 @@
+# =============================================================
+# Cloudflare Pages — redirect rules
+# Format: <from> <to> <status>
+# https://developers.cloudflare.com/pages/configuration/redirects/
+# =============================================================
+
+# Force apex domain (www → mrtooliaa.com)
+https://www.mrtooliaa.com/*  https://mrtooliaa.com/:splat  301!
+
+# Hide raw index.html paths
+/index.html              /                301
+/mediturno/index.html    /mediturno/      301
+/ferretquote/index.html  /ferretquote/    301
+
+# Normalize without-trailing-slash to with-trailing-slash for product paths
+/mediturno     /mediturno/     301
+/ferretquote   /ferretquote/   301

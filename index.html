@@ -28,9 +28,7 @@
   <link rel="icon" type="image/png" href="/assets/logo-mrtooliaa.png" />
   <link rel="apple-touch-icon" href="/assets/logo-mrtooliaa.png" />
 
-  <link rel="preconnect" href="https://fonts.googleapis.com" />
-  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&display=swap" rel="stylesheet" />
+  <link rel="preload" href="/assets/fonts/inter-latin.woff2" as="font" type="font/woff2" crossorigin />
   <link rel="stylesheet" href="/assets/tailwind.css" />
   <style>
     html { scroll-behavior: smooth; }
@@ -244,43 +242,22 @@
         </span>
       </a>
       <div class="hidden md:flex items-center gap-8">
-        <a href="#solution" class="text-white/80 hover:text-white text-sm font-medium transition-colors">Soluciones</a>
-        <a href="#products" class="text-white/80 hover:text-white text-sm font-medium transition-colors">Productos</a>
-        <a href="#how" class="text-white/80 hover:text-white text-sm font-medium transition-colors">Cómo funciona</a>
-        <a href="#pricing" class="text-white/80 hover:text-white text-sm font-medium transition-colors">Precios</a>
-        <a href="https://wa.me/18099567956?text=Hola,%20me%20interesa%20saber%20más%20sobre%20los%20agentes%20IA%20de%20MR%20ToolIAA" target="_blank"
-           class="bg-brand-500 hover:bg-brand-600 text-white text-sm font-bold px-5 py-2.5 rounded-full transition-colors shadow-lg shadow-orange-500/20">
+        <a href="#solution" class="text-white/80 hover:text-white text-base font-semibold transition-colors">Soluciones</a>
+        <a href="#products" class="text-white/80 hover:text-white text-base font-semibold transition-colors">Productos</a>
+        <a href="#how" class="text-white/80 hover:text-white text-base font-semibold transition-colors">Cómo funciona</a>
+        <a href="#pricing" class="text-white/80 hover:text-white text-base font-semibold transition-colors">Precios</a>
+        <a href="https://wa.me/18099567956?text=Hola,%20me%20interesa%20saber%20más%20sobre%20los%20agentes%20IA%20de%20MR%20ToolIAA" target="_blank" rel="noopener noreferrer"
+           class="bg-brand-500 hover:bg-brand-600 text-white text-base font-bold px-6 py-3 rounded-full transition-colors shadow-lg shadow-orange-500/20">
           Hablar con un experto
         </a>
       </div>
-      <a href="https://wa.me/18099567956?text=Hola,%20me%20interesa%20saber%20más%20sobre%20los%20agentes%20IA%20de%20MR%20ToolIAA" target="_blank"
+      <a href="https://wa.me/18099567956?text=Hola,%20me%20interesa%20saber%20más%20sobre%20los%20agentes%20IA%20de%20MR%20ToolIAA" target="_blank" rel="noopener noreferrer"
          class="md:hidden bg-brand-500 text-white text-sm font-bold px-4 py-2 rounded-full">
         Contactar
       </a>
     </div>
   </nav>
-  <script>
-    window.addEventListener('scroll', () => {
-      const nav = document.getElementById('navbar');
-      if (window.scrollY > 60) nav.classList.add('nav-scrolled');
-      else nav.classList.remove('nav-scrolled');
-    });
-
-    // Magnetic hover for the navbar logo (subtle 6px tilt toward cursor)
-    (function () {
-      if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) return;
-      const link = document.getElementById('navLogoLink');
-      const logo = document.getElementById('navLogo');
-      if (!link || !logo) return;
-      link.addEventListener('mousemove', (e) => {
-        const r = link.getBoundingClientRect();
-        const dx = (e.clientX - (r.left + r.width / 2)) / r.width;
-        const dy = (e.clientY - (r.top + r.height / 2)) / r.height;
-        logo.style.transform = `translate(${dx * 6}px, ${dy * 6}px)`;
-      });
-      link.addEventListener('mouseleave', () => { logo.style.transform = ''; });
-    })();
-  </script>
+  <script src="/assets/js/main.js" defer></script>
 
   <!-- ======================================================
        HERO
@@ -312,7 +289,7 @@
                class="gradient-cta text-white font-bold px-8 py-4 rounded-full text-lg shadow-xl shadow-orange-500/30 hover:shadow-orange-500/50 transition-shadow">
               Ver soluciones →
             </a>
-            <a href="https://wa.me/18099567956?text=Hola,%20me%20interesa%20saber%20más%20sobre%20los%20agentes%20IA%20de%20MR%20ToolIAA" target="_blank"
+            <a href="https://wa.me/18099567956?text=Hola,%20me%20interesa%20saber%20más%20sobre%20los%20agentes%20IA%20de%20MR%20ToolIAA" target="_blank" rel="noopener noreferrer"
                class="border border-white/30 text-white font-semibold px-8 py-4 rounded-full text-lg hover:bg-white/10 transition-colors">
               Hablar con un experto
             </a>
@@ -484,7 +461,7 @@
           </div>
           <p class="text-white/60">Recupera tiempo de tu equipo. Sin errores, sin descanso, sin excusas.</p>
         </div>
-        <a href="https://wa.me/18099567956?text=Hola,%20me%20interesa%20saber%20más%20sobre%20los%20agentes%20IA%20de%20MR%20ToolIAA" target="_blank"
+        <a href="https://wa.me/18099567956?text=Hola,%20me%20interesa%20saber%20más%20sobre%20los%20agentes%20IA%20de%20MR%20ToolIAA" target="_blank" rel="noopener noreferrer"
            class="whitespace-nowrap gradient-cta text-white font-bold px-8 py-4 rounded-full shadow-lg hover:shadow-xl transition-shadow">
           Calcular mi ROI →
         </a>
@@ -572,7 +549,7 @@
             <li class="flex items-center gap-2"><span class="text-brand-400 font-bold">✓</span> Integración con tus sistemas</li>
             <li class="flex items-center gap-2"><span class="text-brand-400 font-bold">✓</span> Soporte continuo en español</li>
           </ul>
-          <a href="https://wa.me/18099567956?text=Hola,%20me%20interesa%20saber%20más%20sobre%20los%20agentes%20IA%20de%20MR%20ToolIAA" target="_blank"
+          <a href="https://wa.me/18099567956?text=Hola,%20me%20interesa%20saber%20más%20sobre%20los%20agentes%20IA%20de%20MR%20ToolIAA" target="_blank" rel="noopener noreferrer"
              class="block text-center gradient-cta text-white font-bold py-3 rounded-xl transition-opacity hover:opacity-90">
             Solicitar consulta →
           </a>
@@ -854,7 +831,7 @@
             <li class="flex items-center gap-2.5"><span class="text-brand-500 font-bold">✓</span> Dashboard básico</li>
             <li class="flex items-center gap-2.5"><span class="text-brand-500 font-bold">✓</span> Soporte por WhatsApp</li>
           </ul>
-          <a href="https://wa.me/18099567956?text=Hola,%20me%20interesa%20saber%20más%20sobre%20los%20agentes%20IA%20de%20MR%20ToolIAA" target="_blank"
+          <a href="https://wa.me/18099567956?text=Hola,%20me%20interesa%20saber%20más%20sobre%20los%20agentes%20IA%20de%20MR%20ToolIAA" target="_blank" rel="noopener noreferrer"
              class="block text-center border-2 border-navy-500 text-navy-500 font-bold py-3 rounded-xl hover:bg-navy-500 hover:text-white transition-colors">
             Empezar →
           </a>
@@ -875,7 +852,7 @@
             <li class="flex items-center gap-2.5"><span class="text-brand-500 font-bold">✓</span> Reportes avanzados</li>
             <li class="flex items-center gap-2.5"><span class="text-brand-500 font-bold">✓</span> Soporte prioritario</li>
           </ul>
-          <a href="https://wa.me/18099567956?text=Hola,%20me%20interesa%20saber%20más%20sobre%20los%20agentes%20IA%20de%20MR%20ToolIAA" target="_blank"
+          <a href="https://wa.me/18099567956?text=Hola,%20me%20interesa%20saber%20más%20sobre%20los%20agentes%20IA%20de%20MR%20ToolIAA" target="_blank" rel="noopener noreferrer"
              class="block text-center gradient-cta text-white font-bold py-3 rounded-xl shadow-lg hover:opacity-90 transition-opacity">
             Empezar →
           </a>
@@ -895,7 +872,7 @@
             <li class="flex items-center gap-2.5"><span class="text-brand-400 font-bold">✓</span> Gerente de cuenta dedicado</li>
             <li class="flex items-center gap-2.5"><span class="text-brand-400 font-bold">✓</span> Capacitación del equipo</li>
           </ul>
-          <a href="https://wa.me/18099567956?text=Hola,%20me%20interesa%20saber%20más%20sobre%20los%20agentes%20IA%20de%20MR%20ToolIAA" target="_blank"
+          <a href="https://wa.me/18099567956?text=Hola,%20me%20interesa%20saber%20más%20sobre%20los%20agentes%20IA%20de%20MR%20ToolIAA" target="_blank" rel="noopener noreferrer"
              class="block text-center bg-white/15 hover:bg-white/25 text-white font-bold py-3 rounded-xl transition-colors border border-white/20">
             Agendar demo →
           </a>
@@ -910,7 +887,7 @@
 
       <!-- Demo CTA -->
       <div class="mt-12 text-center">
-        <a href="https://wa.me/18099567956?text=Hola,%20me%20interesa%20saber%20más%20sobre%20los%20agentes%20IA%20de%20MR%20ToolIAA" target="_blank"
+        <a href="https://wa.me/18099567956?text=Hola,%20me%20interesa%20saber%20más%20sobre%20los%20agentes%20IA%20de%20MR%20ToolIAA" target="_blank" rel="noopener noreferrer"
            class="inline-flex items-center gap-3 gradient-cta text-white font-bold px-10 py-5 rounded-full text-lg shadow-xl shadow-orange-200 hover:shadow-orange-300 transition-shadow">
           <span class="text-2xl">📅</span>
           Agendar demo gratuita — sin compromiso
@@ -934,7 +911,7 @@
       <p class="text-white/65 text-lg mb-10 max-w-xl mx-auto">
         Únete a las empresas dominicanas que ya automatizan sus procesos con agentes IA. La consulta inicial es gratis y sin compromiso.
       </p>
-      <a href="https://wa.me/18099567956?text=Hola,%20me%20interesa%20saber%20más%20sobre%20los%20agentes%20IA%20de%20MR%20ToolIAA" target="_blank"
+      <a href="https://wa.me/18099567956?text=Hola,%20me%20interesa%20saber%20más%20sobre%20los%20agentes%20IA%20de%20MR%20ToolIAA" target="_blank" rel="noopener noreferrer"
          class="inline-flex items-center gap-3 bg-white text-navy-500 font-black px-10 py-5 rounded-full text-xl shadow-2xl hover:shadow-white/20 transition-shadow">
         <span class="text-2xl">💬</span>
         Hablar por WhatsApp ahora
@@ -962,11 +939,11 @@
             Empresa 100% digital con base en Rep. Dominicana. Atendemos en todo RD y LATAM de forma remota.
           </p>
           <div class="flex items-center gap-3">
-            <a href="https://wa.me/18099567956?text=Hola,%20me%20interesa%20saber%20más%20sobre%20los%20agentes%20IA%20de%20MR%20ToolIAA" target="_blank"
+            <a href="https://wa.me/18099567956?text=Hola,%20me%20interesa%20saber%20más%20sobre%20los%20agentes%20IA%20de%20MR%20ToolIAA" target="_blank" rel="noopener noreferrer"
                class="flex items-center gap-2 bg-green-600 hover:bg-green-700 text-white text-sm font-bold px-4 py-2 rounded-full transition-colors">
               <span>📱</span> WhatsApp
             </a>
-            <a href="mailto:contacto@mrtooliaa.com"
+            <a href="mailto:info@mrtooliaa.com"
                class="flex items-center gap-2 bg-white/10 hover:bg-white/20 text-white text-sm font-medium px-4 py-2 rounded-full transition-colors">
               ✉️ Email
             </a>
@@ -993,7 +970,7 @@
             </li>
             <li class="flex items-center gap-2">
               <span>✉️</span>
-              <a href="mailto:contacto@mrtooliaa.com" class="hover:text-white transition-colors">contacto@mrtooliaa.com</a>
+              <a href="mailto:info@mrtooliaa.com" class="hover:text-white transition-colors">info@mrtooliaa.com</a>
             </li>
             <li class="flex items-center gap-2">
               <span>🌐</span>
@@ -1015,7 +992,7 @@
   <!-- ======================================================
        WHATSAPP FLOATING BUTTON
   ======================================================= -->
-  <a href="https://wa.me/18099567956?text=Hola,%20me%20interesa%20saber%20más%20sobre%20los%20agentes%20IA%20de%20MR%20ToolIAA" target="_blank"
+  <a href="https://wa.me/18099567956?text=Hola,%20me%20interesa%20saber%20más%20sobre%20los%20agentes%20IA%20de%20MR%20ToolIAA" target="_blank" rel="noopener noreferrer"
      class="wa-pulse fixed bottom-6 right-6 z-50 bg-green-500 hover:bg-green-600 text-white rounded-full shadow-2xl shadow-green-500/40 transition-all hover:scale-105 flex items-center gap-2 overflow-hidden"
      style="padding: 14px 20px; max-width: 200px;">
     <svg class="w-6 h-6 flex-shrink-0" fill="currentColor" viewBox="0 0 24 24">

@@ -28,9 +28,7 @@
   <link rel="icon" type="image/png" href="/assets/logo-mediturno-icon.png" />
   <link rel="apple-touch-icon" href="/assets/logo-mediturno-icon.png" />
 
-  <link rel="preconnect" href="https://fonts.googleapis.com" />
-  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&display=swap" rel="stylesheet" />
+  <link rel="preload" href="/assets/fonts/inter-latin.woff2" as="font" type="font/woff2" crossorigin />
   <link rel="stylesheet" href="/assets/tailwind.css" />
   <style>
     html { scroll-behavior: smooth; }
@@ -75,14 +73,14 @@
       {
         "@type": "Offer",
         "name": "Plan Básico",
-        "price": "2500",
+        "price": "3500",
         "priceCurrency": "DOP",
         "billingPeriod": "P1M"
       },
       {
         "@type": "Offer",
         "name": "Plan Pro",
-        "price": "5000",
+        "price": "5500",
         "priceCurrency": "DOP",
         "billingPeriod": "P1M"
       }
@@ -100,21 +98,21 @@
   <!-- ── NAVBAR ─────────────────────────────────────────────────────────────── -->
   <nav class="fixed top-0 left-0 right-0 z-50 bg-white/95 backdrop-blur-sm border-b border-gray-100 shadow-sm">
     <div class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
-      <div class="flex items-center justify-between h-16">
+      <div class="flex items-center justify-between h-20">
         <a href="/" class="flex items-center gap-3">
-          <img src="/assets/logo-mediturno-icon.png" alt="MediTurno IA" width="48" height="48" fetchpriority="high" decoding="async" class="h-12 w-auto">
-          <span class="text-lg font-bold text-medical-500 hidden sm:block">MediTurno <span class="text-gray-800">IA</span></span>
+          <img src="/assets/logo-mediturno-icon.png" alt="MediTurno IA" width="64" height="64" fetchpriority="high" decoding="async" class="h-16 w-auto">
+          <span class="text-2xl font-bold text-medical-500 hidden sm:block">MediTurno <span class="text-gray-800">IA</span></span>
         </a>
-        <div class="hidden md:flex items-center gap-8 text-sm font-medium text-gray-600">
+        <div class="hidden md:flex items-center gap-8 text-base font-semibold text-gray-600">
           <a href="/" class="text-gray-400 hover:text-medical-500 transition-colors">← MR ToolIAA</a>
           <a href="#como-funciona" class="hover:text-medical-500 transition-colors">Cómo funciona</a>
           <a href="#beneficios" class="hover:text-medical-500 transition-colors">Beneficios</a>
           <a href="#pricing" class="hover:text-medical-500 transition-colors">Precios</a>
         </div>
         <a href="https://wa.me/18099567956?text=Hola,%20me%20interesa%20una%20demo%20de%20MediTurno%20IA"
-           target="_blank"
-           class="bg-green-500 hover:bg-green-600 text-white text-sm font-semibold px-4 py-2 rounded-full transition-colors flex items-center gap-2">
-          <svg class="w-4 h-4" fill="currentColor" viewBox="0 0 24 24"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/></svg>
+           target="_blank" rel="noopener noreferrer"
+           class="bg-green-500 hover:bg-green-600 text-white text-base font-bold px-5 py-2.5 rounded-full transition-colors flex items-center gap-2">
+          <svg class="w-5 h-5" fill="currentColor" viewBox="0 0 24 24"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/></svg>
           Agenda una demo
         </a>
       </div>
@@ -139,7 +137,7 @@
           </p>
           <div class="flex flex-col sm:flex-row gap-4">
             <a href="https://wa.me/18099567956?text=Hola,%20quiero%20probar%20MediTurno%20IA%20gratis"
-               target="_blank"
+               target="_blank" rel="noopener noreferrer"
                class="gradient-cta hover:opacity-90 text-white font-bold px-8 py-4 rounded-xl text-lg transition-opacity flex items-center justify-center gap-3 wa-pulse">
               <svg class="w-6 h-6" fill="currentColor" viewBox="0 0 24 24"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/></svg>
               Prueba gratis 14 días
@@ -519,10 +517,10 @@
           <div class="mb-6">
             <p class="text-sm font-semibold text-gray-500 uppercase tracking-wider mb-2">Básico</p>
             <div class="flex items-end gap-1">
-              <span class="text-4xl font-black text-gray-900">RD$2,500</span>
+              <span class="text-4xl font-black text-gray-900">RD$3,500</span>
               <span class="text-gray-400 mb-1">/mes</span>
             </div>
-            <p class="text-gray-500 text-sm mt-1">≈ USD $43/mes</p>
+            <p class="text-gray-500 text-sm mt-1">≈ USD $60/mes</p>
           </div>
           <p class="text-gray-600 text-sm mb-6">Ideal para clínicas pequeñas con 1 médico y hasta 200 citas al mes.</p>
           <ul class="space-y-3 mb-8">
@@ -534,7 +532,7 @@
             <li class="check-item text-gray-700 text-sm">Soporte por WhatsApp</li>
           </ul>
           <a href="https://wa.me/18099567956?text=Hola,%20me%20interesa%20el%20Plan%20Básico%20de%20MediTurno%20IA"
-             target="_blank"
+             target="_blank" rel="noopener noreferrer"
              class="block text-center border-2 border-medical-500 text-medical-500 hover:bg-medical-500 hover:text-white font-bold py-3 rounded-xl transition-colors">
             Empezar gratis 14 días
           </a>
@@ -548,10 +546,10 @@
           <div class="mb-6">
             <p class="text-sm font-semibold text-medical-500 uppercase tracking-wider mb-2">Pro</p>
             <div class="flex items-end gap-1">
-              <span class="text-4xl font-black text-gray-900">RD$5,000</span>
+              <span class="text-4xl font-black text-gray-900">RD$5,500</span>
               <span class="text-gray-400 mb-1">/mes</span>
             </div>
-            <p class="text-gray-500 text-sm mt-1">≈ USD $86/mes</p>
+            <p class="text-gray-500 text-sm mt-1">≈ USD $100/mes</p>
           </div>
           <p class="text-gray-600 text-sm mb-6">Para clínicas en crecimiento con múltiples médicos y alto volumen de citas.</p>
           <ul class="space-y-3 mb-8">
@@ -565,7 +563,7 @@
             <li class="check-item text-gray-700 text-sm">Soporte prioritario</li>
           </ul>
           <a href="https://wa.me/18099567956?text=Hola,%20me%20interesa%20el%20Plan%20Pro%20de%20MediTurno%20IA"
-             target="_blank"
+             target="_blank" rel="noopener noreferrer"
              class="block text-center bg-medical-500 hover:bg-medical-600 text-white font-bold py-3 rounded-xl transition-colors">
             Empezar gratis 14 días
           </a>
@@ -591,7 +589,7 @@
             <li class="check-item text-gray-300 text-sm">Gerente de cuenta dedicado</li>
           </ul>
           <a href="https://wa.me/18099567956?text=Hola,%20somos%20una%20cadena%20de%20clínicas%20y%20nos%20interesa%20MediTurno%20Enterprise"
-             target="_blank"
+             target="_blank" rel="noopener noreferrer"
              class="block text-center border-2 border-white/30 hover:border-white text-white font-bold py-3 rounded-xl transition-colors">
             Hablar con ventas
           </a>
@@ -600,7 +598,7 @@
 
       <div class="mt-10 text-center">
         <p class="text-gray-400 text-sm">
-          Tipo de cambio referencial: 1 USD = RD$58.5 · Todos los planes incluyen 14 días gratis · Sin tarjeta de crédito requerida
+          14 días gratis · Sin tarjeta de crédito requerida
         </p>
       </div>
     </div>
@@ -618,7 +616,7 @@
         Configura MediTurno IA en menos de 1 hora. Tu primer paciente puede agendar esta misma noche.
       </p>
       <a href="https://wa.me/18099567956?text=Hola!%20Quiero%20empezar%20a%20usar%20MediTurno%20IA%20en%20mi%20clínica"
-         target="_blank"
+         target="_blank" rel="noopener noreferrer"
          class="inline-flex items-center gap-3 gradient-cta hover:opacity-90 text-white font-bold px-10 py-5 rounded-2xl text-xl transition-opacity wa-pulse shadow-2xl">
         <svg class="w-7 h-7" fill="currentColor" viewBox="0 0 24 24"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/></svg>
         Prueba MediTurno IA gratis
@@ -652,36 +650,42 @@
     <div class="max-w-6xl mx-auto">
       <div class="grid md:grid-cols-3 gap-8 mb-8">
         <div>
-          <div class="flex items-center gap-3 mb-4">
-            <img src="/assets/logo-mediturno.png" alt="MediTurno IA" width="180" height="48" loading="lazy" decoding="async" class="h-12 w-auto">
+          <div class="flex items-center gap-3 mb-5">
+            <img src="/assets/logo-mediturno-icon.png" alt="MediTurno IA" width="64" height="64" loading="lazy" decoding="async" class="h-16 w-auto">
+            <span class="text-2xl font-bold text-medical-bright">MediTurno <span class="text-white">IA</span></span>
           </div>
-          <p class="text-sm leading-relaxed mb-2">
+          <p class="text-base leading-relaxed mb-3">
             Agendamiento de citas por WhatsApp para clínicas en República Dominicana y LATAM.
           </p>
-          <p class="text-xs text-gray-500">Un producto de <a href="/" class="text-gray-400 hover:text-white transition-colors">MR ToolIAA</a> · Empresa 100% digital</p>
+          <p class="text-sm text-gray-500">Un producto de <a href="/" class="text-gray-300 hover:text-white transition-colors font-semibold">MR ToolIAA</a> · Empresa 100% digital</p>
         </div>
         <div>
-          <h4 class="text-white font-semibold mb-4">Producto</h4>
-          <ul class="space-y-2 text-sm">
+          <h4 class="text-white font-bold text-lg mb-4">Producto</h4>
+          <ul class="space-y-2.5 text-base">
             <li><a href="#como-funciona" class="hover:text-white transition-colors">Cómo funciona</a></li>
             <li><a href="#beneficios" class="hover:text-white transition-colors">Beneficios</a></li>
             <li><a href="#pricing" class="hover:text-white transition-colors">Precios</a></li>
           </ul>
         </div>
         <div>
-          <h4 class="text-white font-semibold mb-4">Contacto</h4>
-          <ul class="space-y-2 text-sm">
+          <h4 class="text-white font-bold text-lg mb-4">Contacto</h4>
+          <ul class="space-y-2.5 text-base">
             <li>
-              <a href="https://wa.me/18099567956" target="_blank" class="hover:text-white transition-colors flex items-center gap-2">
-                <svg class="w-4 h-4 text-green-500" fill="currentColor" viewBox="0 0 24 24"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/></svg>
+              <a href="https://wa.me/18099567956" target="_blank" rel="noopener noreferrer" class="hover:text-white transition-colors flex items-center gap-2">
+                <svg class="w-5 h-5 text-green-500" fill="currentColor" viewBox="0 0 24 24"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/></svg>
                 WhatsApp: +1 (809) 956-7956
               </a>
             </li>
-            <li><a href="mailto:hola@mediturno.ai" class="hover:text-white transition-colors">hola@mediturno.ai</a></li>
+            <li>
+              <a href="mailto:info@mrtooliaa.com" class="hover:text-white transition-colors flex items-center gap-2">
+                <svg class="w-5 h-5 text-blue-300" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M3 8l9 6 9-6M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z"/></svg>
+                info@mrtooliaa.com
+              </a>
+            </li>
           </ul>
         </div>
       </div>
-      <div class="border-t border-gray-800 pt-8 text-center text-sm">
+      <div class="border-t border-gray-800 pt-8 text-center text-base">
         <p>© 2026 MediTurno IA — MR ToolIAA · República Dominicana · Todos los derechos reservados</p>
       </div>
     </div>

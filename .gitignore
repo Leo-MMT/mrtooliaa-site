@@ -3,3 +3,6 @@ node_modules/
 *.log
 .env
 .env.local
+
+# Contexto local para agentes de IA — no publicar
+_IA_CONTEXT.MD
