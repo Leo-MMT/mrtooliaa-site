@@ -1,21 +1,23 @@
 # mrtooliaa-site
 
-Sitio estático de MR ToolIAA — 3 landings consolidadas para deploy en Cloudflare Pages.
+Sitio estatico de MR ToolIAA desplegado en Cloudflare Pages, con tres landings renderizadas con Astro:
 
-```
-mrtooliaa.com/              → Landing empresa MR ToolIAA
-mrtooliaa.com/mediturno/    → Landing MediTurno IA
-mrtooliaa.com/ferretquote/  → Landing Ferret-Quote Bot
+```text
+mrtooliaa.com/              -> Landing empresa MR ToolIAA
+mrtooliaa.com/mediturno/    -> Landing MediTurno IA
+mrtooliaa.com/ferretquote/  -> Landing Ferret-Quote Bot
 ```
 
 ---
 
 ## Stack actual
 
-- HTML estático + Tailwind CSS **compilado** (sin CDN runtime)
-- Icons SVG inline (Lucide-style) en hot spots; emojis en zonas decorativas
-- Fuentes: Inter (self-hosted variable font en `assets/fonts/`)
-- Deploy: Cloudflare Pages (build step opcional — ver más abajo)
+- Astro 5
+- Tailwind CSS 3
+- Sitio estatico con salida en `dist/`
+- Contenido centralizado en `src/data/`
+- Componentes compartidos en `src/components/`
+- Deploy en Cloudflare Pages
 
 ---
 
@@ -27,141 +29,177 @@ mrtooliaa.com/ferretquote/  → Landing Ferret-Quote Bot
 npm install
 ```
 
-### 2. Compilar Tailwind
+### 2. Levantar el proyecto
 
 ```bash
-npm run build:css     # One-shot: src/input.css → assets/tailwind.css (minified)
-npm run watch:css     # Watch mode durante desarrollo
+npm run dev
 ```
 
-La salida queda en `assets/tailwind.css` y ya está commiteada — así el deploy en Cloudflare Pages no necesita ejecutar un build step.
+Astro sirve el sitio localmente con recarga en caliente.
 
-### 3. Servir localmente
+### 3. Build de produccion
 
 ```bash
-python3 -m http.server 8787
-# abre http://localhost:8787
+npm run build
 ```
+
+La salida se genera en `dist/`.
+
+### 4. Verificaciones integradas
+
+```bash
+npm run verify
+```
+
+Ese comando ejecuta:
+
+- `npm run build`
+- `npm run verify:csp`
+- `npm run verify:links`
 
 ---
 
 ## Deploy en Cloudflare Pages
 
-### 1. Conectar repo a Cloudflare Pages
+### Configuracion recomendada
 
-1. Entra a [dash.cloudflare.com](https://dash.cloudflare.com) → **Workers & Pages** → **Create application** → **Pages**
-2. Click **Connect to Git** → autoriza GitHub → selecciona el repo `mrtooliaa-site`
-3. Configuración de build:
-   - **Framework preset:** None
-   - **Build command:** *(vacío — el CSS ya está compilado en `assets/tailwind.css`)*
-   - **Build output directory:** `/`
+1. En Cloudflare Pages, conecta el repo `mrtooliaa-site`.
+2. Usa esta configuracion:
 
-Cloudflare Pages despliega automáticamente en cada push a `main`.
+- Framework preset: `Astro`
+- Build command: `npm run build`
+- Build output directory: `dist`
 
-> **Nota:** si prefieres que CF compile el CSS en el servidor, usa:
-> - Build command: `npm install && npm run build:css`
-> - Build output: `/`
+Si prefieres no usar el preset de Astro, tambien funciona con:
 
-### 2. Configurar dominio custom `mrtooliaa.com`
+- Framework preset: `None`
+- Build command: `npm run build`
+- Build output directory: `dist`
 
-1. En Cloudflare Pages → tu proyecto → **Custom domains** → **Set up a custom domain**
-2. Ingresa `mrtooliaa.com` → Click **Continue**
+### Archivos estaticos de plataforma
 
-### 3. Cambiar nameservers en Namecheap
+Los siguientes archivos se copian desde `public/` al build final:
 
-1. Entra a [namecheap.com](https://namecheap.com) → **Domain List** → `mrtooliaa.com` → **Manage**
-2. En **Nameservers**, selecciona **Custom DNS** e ingresa los que Cloudflare te dio
-3. Propagación: 5 min – 48 h
+- `public/_headers`
+- `public/_redirects`
+- `public/robots.txt`
+- `public/sitemap.xml`
 
-### 4. SSL/HTTPS
+### Dominio y HTTPS
 
-Cloudflare genera el certificado SSL automáticamente. Para forzar HTTPS: Dashboard → SSL/TLS → Edge Certificates → **Always Use HTTPS**.
+Cloudflare gestiona el dominio custom y el certificado SSL. Mantener activado:
+
+- custom domain `mrtooliaa.com`
+- `Always Use HTTPS`
 
 ---
 
 ## Estructura del repo
 
-```
+```text
 mrtooliaa-site/
-├── index.html              ← Landing MR ToolIAA (raíz)
-├── mediturno/
-│   └── index.html          ← Landing MediTurno IA
-├── ferretquote/
-│   └── index.html          ← Landing Ferret-Quote Bot
-├── assets/
-│   ├── fonts/              ← Inter variable font (self-hosted)
-│   ├── js/main.js          ← JS mínimo (nav scroll + logo)
-│   ├── logo-*.png          ← Logos
-│   └── tailwind.css        ← CSS compilado (commited)
+├── public/
+│   ├── _headers
+│   ├── _redirects
+│   ├── robots.txt
+│   ├── sitemap.xml
+│   └── assets/
 ├── src/
-│   └── input.css           ← Fuente Tailwind (@tailwind directives + tokens)
-├── tailwind.config.js      ← Colores, fonts, safelist
-├── package.json            ← Scripts build/watch
-├── _headers                ← CSP, HSTS, cache, security
-├── _redirects              ← Canonical URLs, trailing slash
-├── sitemap.xml             ← SEO
-├── robots.txt              ← SEO
-├── docs/                   ← Documentación técnica e informes
-│   ├── INFORME_SEGURIDAD.md
+│   ├── components/
+│   ├── data/
+│   ├── layouts/
+│   ├── pages/
+│   ├── styles/
+│   └── input.css
+├── scripts/
+│   ├── verify-csp-hashes.mjs
+│   └── verify-links.mjs
+├── docs/
 │   ├── INFORME_REFACTOR.md
-│   └── design-system/      ← Handoff del design system (referencia)
-├── archive/                ← Material histórico
+│   ├── INFORME_SEGURIDAD.md
+│   └── design-system/
+├── archive/
 │   └── MR ToolIAA Design System-handoff.zip
+├── astro.config.mjs
+├── tailwind.config.js
+├── package.json
 └── README.md
 ```
 
 ---
 
+## Arquitectura
+
+### Paginas
+
+- [src/pages/index.astro](/Users/lmmt/Desktop/Reguero/Proyecto/mrtooliaa-site/src/pages/index.astro)
+- [src/pages/mediturno.astro](/Users/lmmt/Desktop/Reguero/Proyecto/mrtooliaa-site/src/pages/mediturno.astro)
+- [src/pages/ferretquote.astro](/Users/lmmt/Desktop/Reguero/Proyecto/mrtooliaa-site/src/pages/ferretquote.astro)
+
+### Layouts y componentes compartidos
+
+- [src/layouts/BaseLayout.astro](/Users/lmmt/Desktop/Reguero/Proyecto/mrtooliaa-site/src/layouts/BaseLayout.astro)
+- [src/components/layout/Navbar.astro](/Users/lmmt/Desktop/Reguero/Proyecto/mrtooliaa-site/src/components/layout/Navbar.astro)
+- [src/components/layout/Footer.astro](/Users/lmmt/Desktop/Reguero/Proyecto/mrtooliaa-site/src/components/layout/Footer.astro)
+- [src/components/seo/SEOHead.astro](/Users/lmmt/Desktop/Reguero/Proyecto/mrtooliaa-site/src/components/seo/SEOHead.astro)
+
+### Datos centralizados
+
+- [src/data/site.ts](/Users/lmmt/Desktop/Reguero/Proyecto/mrtooliaa-site/src/data/site.ts)
+- [src/data/mrtooliaa.ts](/Users/lmmt/Desktop/Reguero/Proyecto/mrtooliaa-site/src/data/mrtooliaa.ts)
+- [src/data/mediturno.ts](/Users/lmmt/Desktop/Reguero/Proyecto/mrtooliaa-site/src/data/mediturno.ts)
+- [src/data/ferretquote.ts](/Users/lmmt/Desktop/Reguero/Proyecto/mrtooliaa-site/src/data/ferretquote.ts)
+
+---
+
 ## Seguridad
 
-El archivo `_headers` aplica (vía Cloudflare Pages):
+La politica de seguridad vive en [public/_headers](/Users/lmmt/Desktop/Reguero/Proyecto/mrtooliaa-site/public/_headers).
 
-- **CSP** estricta (`default-src 'self'`, `script-src 'self' + hashes SHA-256` para JSON-LD, `font-src 'self'`)
-- **HSTS** `max-age=31536000; includeSubDomains; preload`
-- `X-Frame-Options: DENY`, `X-Content-Type-Options: nosniff`
-- `Referrer-Policy: strict-origin-when-cross-origin`
-- `Permissions-Policy` restrictiva (cámara, micrófono, geo, FLoC desactivados)
-- `Cross-Origin-Opener-Policy: same-origin`, `Cross-Origin-Resource-Policy: same-origin`
-- Cache-Control diferenciado: immutable para assets, revalidate para HTML
+Incluye:
 
-> **Nota sobre CSP:** Los bloques `<script type="application/ld+json">` están allowlisteados por hash SHA-256. Cualquier edición en estos bloques requiere regenerar los hashes. Ver `docs/INFORME_SEGURIDAD.md` §6.
+- CSP estricta con hashes para JSON-LD
+- HSTS
+- `X-Frame-Options: DENY`
+- `X-Content-Type-Options: nosniff`
+- `Cross-Origin-Opener-Policy: same-origin`
+- `Cross-Origin-Resource-Policy: same-origin`
+
+### Importante
+
+Los bloques `<script type="application/ld+json">` se renderizan desde datos. Si se modifican, hay que verificar los hashes CSP con:
+
+```bash
+npm run verify:csp
+```
+
+Mas contexto en [docs/INFORME_SEGURIDAD.md](/Users/lmmt/Desktop/Reguero/Proyecto/mrtooliaa-site/docs/INFORME_SEGURIDAD.md).
 
 ---
 
 ## SEO
 
-- Sitemap XML en `/sitemap.xml`
-- `robots.txt` con referencia al sitemap
-- OpenGraph + Twitter Card tags completos en las 3 landings
-- Canonical URLs
-- Schema.org JSON-LD: `Organization` (home), `SoftwareApplication` (MediTurno, Ferret-Quote)
-- `theme-color` por landing (navy / medical / primary)
+- Canonicals por pagina
+- OpenGraph y Twitter Card por landing
+- JSON-LD por landing
+- `robots.txt` y `sitemap.xml`
+- URLs limpias con trailing slash en producto
 
 ---
 
-## Roadmap — migración a Astro
+## Documentacion relacionada
 
-El sitio está en proceso de migración a [Astro](https://astro.build):
-
-1. **Componentes**: las 3 landings comparten navbar, footer y CTA WhatsApp → `<Navbar />`, `<Footer />`, `<WhatsAppCTA />`.
-2. **Layouts**: un `BaseLayout.astro` envuelve los `<head>` (OG, preconnect, CSP-compatible script tags).
-3. **Contenido**: textos de producto y features → TS data files → map en componentes.
-4. **Tailwind**: ya está en v3 con config compartida — `@astrojs/tailwind` lo lee directamente.
-5. **Deploy**: CF Pages soporta Astro out-of-the-box — solo cambia build command a `npm run build`.
-
-Archivos que **NO** requieren cambio en la migración: `_headers`, `sitemap.xml`, `robots.txt`, `assets/*.png`.
+- [docs/INFORME_SEGURIDAD.md](/Users/lmmt/Desktop/Reguero/Proyecto/mrtooliaa-site/docs/INFORME_SEGURIDAD.md)
+- [docs/INFORME_REFACTOR.md](/Users/lmmt/Desktop/Reguero/Proyecto/mrtooliaa-site/docs/INFORME_REFACTOR.md)
 
 ---
 
-## Verificación post-deploy
+## Verificacion post-deploy
 
-- [ ] `https://mrtooliaa.com` carga la landing empresa
-- [ ] `https://mrtooliaa.com/mediturno/` carga la landing MediTurno
-- [ ] `https://mrtooliaa.com/ferretquote/` carga la landing Ferret-Quote
-- [ ] Links "← MR ToolIAA" en product pages vuelven a `/`
-- [ ] Logos de producto cargan en las tarjetas (MediTurno, Ferret-Quote)
-- [ ] Logo MR ToolIAA carga en navbar y footer
-- [ ] HTTPS activo (candado verde en browser)
-- [ ] `curl -I https://mrtooliaa.com` devuelve CSP + HSTS headers
-- [ ] `https://mrtooliaa.com/sitemap.xml` accesible
-- [ ] Lighthouse score ≥ 95 en las 3 landings (Performance + SEO + Best Practices)
+- [ ] `https://mrtooliaa.com/` carga correctamente
+- [ ] `https://mrtooliaa.com/mediturno/` carga correctamente
+- [ ] `https://mrtooliaa.com/ferretquote/` carga correctamente
+- [ ] `npm run verify` pasa en limpio
+- [ ] `curl -I https://mrtooliaa.com` devuelve CSP y HSTS
+- [ ] `https://mrtooliaa.com/sitemap.xml` responde
+- [ ] Lighthouse >= 95 en las 3 landings

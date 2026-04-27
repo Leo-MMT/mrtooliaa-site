@@ -1,274 +1,222 @@
 # Informe de seguridad — mrtooliaa-site
 
-**Proyecto:** `mrtooliaa-site` (3 landings estáticas en Cloudflare Pages)
-**Fecha auditoría:** 2026-04-26
-**Auditor:** Claude (Opus 4.7)
-**Alcance:** `index.html`, `mediturno/index.html`, `ferretquote/index.html`, `_headers`, `_redirects`, dependencias, configuración de deploy.
+**Proyecto:** `mrtooliaa-site`  
+**Fecha auditoria:** 2026-04-27  
+**Estado auditado:** arquitectura Astro actual, con salida estatica en `dist/`  
+**Alcance:** `src/pages/`, `src/components/seo/SEOHead.astro`, `public/_headers`, `public/_redirects`, scripts de verificacion, dependencias y flujo de build.
 
 ---
 
 ## Resumen ejecutivo
 
-| | Antes | Después |
-|---|---|---|
-| Riesgo general | Bajo–Medio | **Muy bajo** |
-| Headers de seguridad | 7/10 | **10/10** |
-| CSP `script-src` | `'self' 'unsafe-inline'` | `'self' + hashes` |
-| Fuentes externas | Google Fonts CDN | **Self-hosted** |
-| Reverse-tabnabbing | 19 enlaces vulnerables | **0** |
-| Cookies / tracking / forms | Ninguno | Ninguno |
-| Secretos en repo | Ninguno | Ninguno |
+El sitio tiene una postura de seguridad fuerte para su categoria:
 
-Esperable en [securityheaders.com](https://securityheaders.com): **A+** (vs. B/A anterior).
+- sin formularios propios
+- sin cookies de aplicacion
+- sin runtime complejo en cliente
+- con CSP estricta
+- con recursos propios en vez de CDNs de terceros
 
----
+El cambio mas importante respecto al estado anterior es que la seguridad ya no depende de HTML manual en raiz, sino de una arquitectura Astro con datos centralizados y verificaciones automatizadas.
 
-## 1. Metodología
+### Evaluacion general
 
-Se revisaron los siguientes vectores típicos de la OWASP Top 10 para sitios estáticos:
-
-- **Headers HTTP de seguridad** (`_headers`).
-- **Content Security Policy** — directivas, fuentes permitidas, nivel de strictness.
-- **HTTPS / HSTS** — preload, includeSubDomains.
-- **Clickjacking** — `X-Frame-Options` y CSP `frame-ancestors`.
-- **Reverse tabnabbing** — `target="_blank"` sin `rel="noopener noreferrer"`.
-- **Recursos de terceros** — CDN externos, SRI, privacidad.
-- **Inline scripts / event handlers** — riesgo de XSS si futuro contenido se refleja.
-- **Fugas de información** — sourcemaps, comentarios, archivos `.env`, secretos hardcoded.
-- **Mixed content / upgrade-insecure-requests**.
-- **MIME sniffing** y `Referrer-Policy`.
-- **Configuración de Cloudflare Pages** — caché, redirects, canonical.
+- Riesgo general: **Muy bajo**
+- Security headers esperables: **A / A+**
+- Riesgo operativo principal: **deriva documental o errores manuales fuera del flujo `npm run verify`**
 
 ---
 
-## 2. Hallazgos
+## 1. Superficie revisada
 
-### 🟡 H-01 — Reverse tabnabbing en 19 enlaces externos
-**Severidad:** Media · **Estado:** ✅ Resuelto
+### Render y metadata
 
-Los enlaces con `target="_blank"` permiten que la pestaña abierta acceda a `window.opener` y manipule la URL del sitio origen.
+- [src/pages/index.astro](/Users/lmmt/Desktop/Reguero/Proyecto/mrtooliaa-site/src/pages/index.astro)
+- [src/pages/mediturno.astro](/Users/lmmt/Desktop/Reguero/Proyecto/mrtooliaa-site/src/pages/mediturno.astro)
+- [src/pages/ferretquote.astro](/Users/lmmt/Desktop/Reguero/Proyecto/mrtooliaa-site/src/pages/ferretquote.astro)
+- [src/components/seo/SEOHead.astro](/Users/lmmt/Desktop/Reguero/Proyecto/mrtooliaa-site/src/components/seo/SEOHead.astro)
 
-| Archivo | Antes | Después |
-|---|---|---|
-| `index.html` | 12 vulnerables | 12/12 con `rel="noopener noreferrer"` |
-| `mediturno/index.html` | 7 vulnerables | 7/7 con `rel="noopener noreferrer"` |
-| `ferretquote/index.html` | 0 (ya correcto) | 11/11 |
+### Seguridad de plataforma
 
-Refuerzo adicional: header `Cross-Origin-Opener-Policy: same-origin` aísla el contexto del browsing context.
+- [public/_headers](/Users/lmmt/Desktop/Reguero/Proyecto/mrtooliaa-site/public/_headers)
+- [public/_redirects](/Users/lmmt/Desktop/Reguero/Proyecto/mrtooliaa-site/public/_redirects)
 
----
+### Verificaciones
 
-### 🟡 H-02 — CSP permitía `'unsafe-inline'` en `script-src`
-**Severidad:** Media · **Estado:** ✅ Resuelto
-
-`'unsafe-inline'` permite ejecutar cualquier `<script>` inline. En un sitio estático sin inputs de usuario el riesgo real es teórico, pero rompe el principio de defensa en profundidad y bloquea Lighthouse / observatory.
-
-**Solución aplicada:**
-1. JS ejecutable extraído de `index.html` → `assets/js/main.js` (cargado vía `<script src="..." defer>`).
-2. Bloques `<script type="application/ld+json">` (1 por landing) allowlisteados por **hash SHA-256**.
-3. CSP ahora usa: `script-src 'self' 'sha256-...' 'sha256-...' 'sha256-...'`.
-
-> ⚠️ Mantenimiento: cualquier edición en JSON-LD invalida su hash. Procedimiento de regeneración documentado en `_IA_CONTEXT.MD` (sección 8.5) y replicado abajo en sección 6.
+- [scripts/verify-csp-hashes.mjs](/Users/lmmt/Desktop/Reguero/Proyecto/mrtooliaa-site/scripts/verify-csp-hashes.mjs)
+- [scripts/verify-links.mjs](/Users/lmmt/Desktop/Reguero/Proyecto/mrtooliaa-site/scripts/verify-links.mjs)
+- [package.json](/Users/lmmt/Desktop/Reguero/Proyecto/mrtooliaa-site/package.json)
 
 ---
 
-### 🟢 H-03 — Google Fonts (privacidad + CSP)
-**Severidad:** Baja · **Estado:** ✅ Resuelto
+## 2. Hallazgos y estado
 
-Cada visitante hacía requests a `fonts.googleapis.com` y `fonts.gstatic.com`, exponiendo IP y user-agent a Google. Además impedía endurecer CSP.
+### H-01 — CSP estricta con hashes para JSON-LD
 
-**Solución aplicada:**
-- Inter descargada como **variable font** (woff2) y self-hosteada en `assets/fonts/`.
-- 2 archivos cubren todos los pesos 100–900 (deduplicación tras detectar archivos byte-idénticos en CDN).
-- Tamaños: `inter-latin.woff2` (47KB), `inter-latin-ext.woff2` (83KB) → total **130KB** (vs. ~800KB si se hubiera bajado un archivo por peso).
-- `@font-face` declaradas en `src/input.css`, compiladas a `assets/tailwind.css`.
-- `<link>` a Google Fonts removidos de las 3 landings.
-- Preload local agregado: `<link rel="preload" href="/assets/fonts/inter-latin.woff2" as="font" crossorigin>`.
-- CSP endurecido: `font-src 'self'`, `style-src 'self' 'unsafe-inline'` (ya sin Google).
+**Severidad:** Media  
+**Estado:** Resuelto y automatizado
 
----
+Los bloques JSON-LD ya no dependen de scripts inline escritos a mano en HTML raiz. Se renderizan desde [SEOHead.astro](/Users/lmmt/Desktop/Reguero/Proyecto/mrtooliaa-site/src/components/seo/SEOHead.astro:55) y se validan contra `public/_headers` con [verify-csp-hashes.mjs](/Users/lmmt/Desktop/Reguero/Proyecto/mrtooliaa-site/scripts/verify-csp-hashes.mjs:1).
 
-### 🟢 H-04 — Header `X-XSS-Protection` obsoleto
-**Severidad:** Informativa · **Estado:** ✅ Resuelto
+### H-02 — Reverse tabnabbing
 
-`X-XSS-Protection: 1; mode=block` está deprecado (Chrome lo removió, Firefox nunca lo soportó) y en algunos casos puede introducir vulnerabilidades. La mitigación moderna es CSP.
+**Severidad:** Media  
+**Estado:** Resuelto
 
-**Solución aplicada:** header eliminado del `_headers`.
+Las paginas generadas validan `target="_blank"` con `rel="noopener"` o `rel="noopener noreferrer"` a traves de [verify-links.mjs](/Users/lmmt/Desktop/Reguero/Proyecto/mrtooliaa-site/scripts/verify-links.mjs:38).
 
----
+### H-03 — Dependencia de fuentes externas
 
-### 🟢 H-05 — Hardening adicional
-**Severidad:** Mejora · **Estado:** ✅ Resuelto
+**Severidad:** Baja  
+**Estado:** Resuelto
 
-Headers cross-origin agregados como defensa en profundidad:
+Inter se sirve localmente y se precarga desde assets propios. No hay dependencia de Google Fonts en el flujo actual.
 
-- `Cross-Origin-Opener-Policy: same-origin` — aísla `window.opener`.
-- `Cross-Origin-Resource-Policy: same-origin` — bloquea hotlink de assets desde otros sitios.
+### H-04 — Headers de endurecimiento
 
-`_redirects` creado para canonicalizar URLs (apex vs www, trailing slash, ocultar `/index.html`).
+**Severidad:** Mejora  
+**Estado:** Resuelto
 
----
+Se mantienen:
 
-## 3. Cambios aplicados (resumen)
+- `X-Frame-Options: DENY`
+- `X-Content-Type-Options: nosniff`
+- `Referrer-Policy: strict-origin-when-cross-origin`
+- `Strict-Transport-Security`
+- `Cross-Origin-Opener-Policy: same-origin`
+- `Cross-Origin-Resource-Policy: same-origin`
 
-### Archivos modificados
+### H-05 — Riesgo operativo residual
 
-| Archivo | Cambio |
-|---|---|
-| `_headers` | +COOP/CORP, –X-XSS-Protection, CSP endurecido (hashes, sin Google Fonts) |
-| `_redirects` | **nuevo** — canonical apex, trailing slash, oculta index.html |
-| `index.html` | rel=noopener, JS externalizado, preload Inter local |
-| `mediturno/index.html` | rel=noopener, preload Inter local |
-| `ferretquote/index.html` | preload Inter local |
-| `src/input.css` | `@font-face` Inter self-hosted |
-| `assets/tailwind.css` | recompilado |
-| `assets/js/main.js` | **nuevo** — scroll handler + magnetic logo |
-| `assets/fonts/inter-latin.woff2` | **nuevo** — 47KB |
-| `assets/fonts/inter-latin-ext.woff2` | **nuevo** — 83KB |
+**Severidad:** Baja  
+**Estado:** Aceptado con mitigacion
 
-### `_IA_CONTEXT.MD` (local, gitignored)
-
-Sección 8 ampliada con:
-- Procedimiento de regeneración de hashes CSP.
-- Política: nunca volver a Google Fonts CDN.
-- Política: JS ejecutable solo en `assets/js/`, no inline.
-- Política: todos los `target="_blank"` requieren `rel="noopener noreferrer"`.
+El principal riesgo remanente no es una vulnerabilidad tecnica, sino saltarse el flujo de verificacion antes de deploy. La mitigacion actual es ejecutar `npm run verify`.
 
 ---
 
-## 4. Headers finales (`_headers`)
+## 3. Controles actuales
 
-```http
-X-Frame-Options: DENY
-X-Content-Type-Options: nosniff
-Referrer-Policy: strict-origin-when-cross-origin
-Permissions-Policy: camera=(), microphone=(), geolocation=(), interest-cohort=()
-Strict-Transport-Security: max-age=31536000; includeSubDomains; preload
-Cross-Origin-Opener-Policy: same-origin
-Cross-Origin-Resource-Policy: same-origin
-Content-Security-Policy: default-src 'self';
-                         script-src 'self'
-                                    'sha256-KhQvt2MC/0QlFyNruv0+cPrMHRVx/EBkHpfkmREsgvg='
-                                    'sha256-NWMyw0W/DNP+SoQg8wgNpi55UcsJTRkzygZ7vreAuQE='
-                                    'sha256-VacjrFqhICsdoRj96DP8Zr/mJ+CGh3KZ2a2IYBQRrYg=';
-                         style-src 'self' 'unsafe-inline';
-                         font-src 'self';
-                         img-src 'self' data:;
-                         connect-src 'self';
-                         frame-ancestors 'none';
-                         base-uri 'self';
-                         form-action 'self' https://wa.me;
-                         upgrade-insecure-requests
-```
-
-> El CSP en el archivo real va en una sola línea. Acá se formatea para legibilidad.
-
----
-
-## 5. `_redirects`
-
-```
-https://www.mrtooliaa.com/*  https://mrtooliaa.com/:splat  301!
-/index.html              /                301
-/mediturno/index.html    /mediturno/      301
-/ferretquote/index.html  /ferretquote/    301
-/mediturno     /mediturno/     301
-/ferretquote   /ferretquote/   301
-```
-
----
-
-## 6. Mantenimiento — gotchas críticos
-
-### Editar JSON-LD invalida CSP
-
-Cualquier cambio (incluso un espacio) en un bloque `<script type="application/ld+json">` rompe el structured data en producción (no falla visualmente, pero Google deja de verlo).
-
-**Procedimiento:**
+### En build
 
 ```bash
-python3 - <<'PY'
-import re, hashlib, base64, pathlib
-for f in ['index.html','mediturno/index.html','ferretquote/index.html']:
-    html = pathlib.Path(f).read_text()
-    for c in re.findall(r'<script type="application/ld\+json">(.*?)</script>', html, re.DOTALL):
-        h = base64.b64encode(hashlib.sha256(c.encode()).digest()).decode()
-        print(f"{f}: 'sha256-{h}'")
-PY
+npm run build
 ```
 
-Reemplazá los 3 valores `'sha256-...'` en `_headers`.
+Genera las tres paginas estaticas en `dist/`.
 
-### Agregar JS ejecutable
-
-**No** poner `<script>...</script>` con código en HTML. Opciones válidas:
-- Agregar al archivo existente: `assets/js/main.js`.
-- Crear nuevo archivo en `assets/js/` y referenciarlo: `<script src="/assets/js/X.js" defer></script>`.
-
-`'self'` ya cubre cualquier JS bajo el dominio.
-
-### Volver a Google Fonts (no hacerlo)
-
-Si necesitás otro peso/familia de Inter o agregar otra fuente, **descargála y self-hosteála** en `assets/fonts/`. Volver al CDN romperá:
-- `font-src 'self'` (CSP)
-- `style-src 'self' 'unsafe-inline'` (CSP — necesitaría agregar `https://fonts.googleapis.com`)
-
-Y reintroduce el leak de privacidad.
-
----
-
-## 7. Validación post-deploy
-
-1. **[securityheaders.com](https://securityheaders.com/?q=mrtooliaa.com)** → grade objetivo **A+**.
-2. **[Mozilla Observatory](https://observatory.mozilla.org/analyze/mrtooliaa.com)** → grade objetivo **A+**.
-3. **DevTools → Console** → 0 errores de CSP. Si hay alguno, anotá el hash/source que reporta y agregálo.
-4. **DevTools → Network** → confirmá:
-   - `inter-latin.woff2` carga desde `mrtooliaa.com`, NO de `gstatic.com`.
-   - `main.js` carga desde `/assets/js/`.
-   - Sin requests a `fonts.googleapis.com` ni `fonts.gstatic.com`.
-5. **[Google Rich Results Test](https://search.google.com/test/rich-results)** → estructura JSON-LD válida en las 3 landings.
-6. **[hstspreload.org](https://hstspreload.org)** → confirmar elegibilidad para HSTS preload (si querés que Chrome/Firefox precarguen el dominio).
-
----
-
-## 8. Riesgos residuales aceptados
-
-Estos puntos NO son vulnerabilidades activas pero conviene tenerlos en mente:
-
-| Riesgo | Por qué se acepta | Mitigación opcional |
-|---|---|---|
-| `mailto:info@mrtooliaa.com` en texto plano | Necesario para CTA de contacto | Reemplazar por form con Turnstile + Worker |
-| Número WhatsApp `+18099567956` en 30+ enlaces | Es el canal principal de leads | Rotar a número WA Business dedicado al sitio si llega spam |
-| `style-src 'unsafe-inline'` | Hay `style="..."` inline en navbar y WhatsApp button | Refactor a clases Tailwind / CSS externo (~30 min) |
-| Cache `immutable` en `assets/tailwind.css` | Acelera carga; pero requiere rotar nombre al cambiar | Renombrar a `tailwind.[hash].css` en build |
-| Comentarios HTML revelan estructura | Cero impacto técnico, solo cosmético | HTML minifier en pipeline si se quiere |
-
----
-
-## 9. Pendientes (decisión del propietario)
-
-- [ ] Commit y push de los cambios (10 archivos).
-- [ ] Validación post-deploy con las 6 herramientas listadas en sección 7.
-- [ ] (Opcional) Submit a [hstspreload.org](https://hstspreload.org).
-- [ ] (Opcional) Reemplazar `mailto:` por form con Turnstile.
-- [ ] (Opcional) Refactor de inline `style=` para eliminar `'unsafe-inline'` de `style-src`.
-
----
-
-## Apéndice — comandos útiles
+### Verificacion CSP
 
 ```bash
-# Rebuild CSS (correr siempre que se toque src/input.css o tailwind.config.js)
-npm run build:css
-
-# Servir local (verificar que CSP no rompa nada antes de pushear)
-python3 -m http.server 8787
-
-# Desarrollo con hot-rebuild de CSS
-npm run watch:css
-
-# Verificar headers reales del deploy
-curl -sI https://mrtooliaa.com/ | grep -iE 'content-security-policy|strict-transport|x-frame|cross-origin'
-
-# Recomputar hashes JSON-LD (ver sección 6)
+npm run verify:csp
 ```
+
+Comprueba que cada hash de JSON-LD generado exista en `public/_headers`.
+
+### Verificacion de enlaces y assets
+
+```bash
+npm run verify:links
+```
+
+Comprueba:
+
+- telefono correcto en `wa.me`
+- `rel` en enlaces con `target="_blank"`
+- existencia de assets referenciados en el HTML generado
+
+### Verificacion completa
+
+```bash
+npm run verify
+```
+
+Ejecuta build + validaciones.
+
+---
+
+## 4. Headers esperados
+
+La fuente de verdad es [public/_headers](/Users/lmmt/Desktop/Reguero/Proyecto/mrtooliaa-site/public/_headers).
+
+Los controles clave esperados son:
+
+- `default-src 'self'`
+- `script-src 'self'` mas hashes SHA-256 para JSON-LD
+- `style-src 'self' 'unsafe-inline'`
+- `font-src 'self'`
+- `img-src 'self' data:`
+- `frame-ancestors 'none'`
+- `form-action 'self' https://wa.me`
+
+---
+
+## 5. Mantenimiento correcto
+
+### Si cambias contenido SEO o JSON-LD
+
+1. Edita los datos en `src/data/`.
+2. Ejecuta:
+
+```bash
+npm run verify:csp
+```
+
+3. Si falla, actualiza los hashes de `public/_headers` segun el flujo automatizado o el valor reportado.
+
+### Si cambias enlaces o assets
+
+Ejecuta:
+
+```bash
+npm run verify:links
+```
+
+### Si cambias la estructura del sitio
+
+Ejecuta:
+
+```bash
+npm run verify
+```
+
+---
+
+## 6. Riesgos residuales aceptados
+
+| Riesgo | Motivo | Mitigacion |
+|---|---|---|
+| `style-src 'unsafe-inline'` | Hay estilos inline y clases generadas que aun no justifican endurecimiento extra | Podria refactorizarse mas adelante |
+| Enlaces repetidos a WhatsApp | Es el principal canal de conversion | Verificados automaticamente |
+| Material historico en `archive/` | No afecta runtime, pero si el repo | Mantenerlo fuera del camino operativo |
+
+---
+
+## 7. Validacion post-deploy
+
+1. Ejecutar localmente:
+
+```bash
+npm run verify
+```
+
+2. Verificar produccion:
+
+```bash
+curl -I https://mrtooliaa.com
+```
+
+3. Confirmar:
+
+- presencia de CSP y HSTS
+- carga correcta de las tres landings
+- ausencia de errores de consola relacionados con CSP
+- `robots.txt` y `sitemap.xml` accesibles
+
+---
+
+## 8. Conclusion
+
+La seguridad del proyecto esta bien resuelta para su superficie real. La mejora mas importante no fue solo endurecer headers, sino mover el sitio a una arquitectura donde la metadata, los datos y las validaciones pueden mantenerse sin depender de edicion manual dispersa.
+
+El riesgo principal ya no esta en la configuracion tecnica, sino en no seguir el flujo de verificacion antes de desplegar.
