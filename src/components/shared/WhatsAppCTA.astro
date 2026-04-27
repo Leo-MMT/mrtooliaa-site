@@ -1,0 +1,52 @@
+---
+/**
+ * WhatsAppCTA — Inline WhatsApp call-to-action button.
+ * Used throughout product and corporate landings for primary/secondary CTAs.
+ */
+import { waLink } from '@data/site';
+
+interface Props {
+  text: string;
+  message?: string;
+  href?: string;
+  variant?: 'primary' | 'secondary' | 'outline' | 'ghost' | 'white' | 'wa-green';
+  size?: 'sm' | 'md' | 'lg' | 'xl';
+  icon?: boolean;
+  class?: string;
+}
+
+const {
+  text, message, href: customHref, variant = 'primary', size = 'md', icon = true,
+  class: className = '',
+} = Astro.props;
+
+const href = customHref ?? waLink(message);
+const isExternal = href.startsWith('http');
+
+const sizeClasses: Record<string, string> = {
+  sm: 'px-5 py-2.5 text-sm rounded-lg',
+  md: 'px-7 py-3 text-sm rounded-xl',
+  lg: 'px-10 py-4 text-base rounded-xl',
+  xl: 'px-10 py-5 text-lg rounded-full',
+};
+
+const variantClasses: Record<string, string> = {
+  'primary': 'gradient-cta text-white font-bold shadow-lg hover:opacity-90 transition-opacity',
+  'secondary': 'bg-white text-navy-500 font-black shadow-2xl hover:shadow-white/20 transition-shadow',
+  'outline': 'border-2 border-navy-500 text-navy-500 font-bold hover:bg-navy-500 hover:text-white transition-colors',
+  'ghost': 'text-brand-500 font-bold hover:text-brand-600 transition-colors',
+  'white': 'bg-white text-navy-500 font-black shadow-2xl hover:shadow-white/20 transition-shadow',
+  'wa-green': 'bg-green-500 hover:bg-green-600 text-white font-black shadow-lg transition-colors',
+};
+---
+<a href={href}
+   target={isExternal ? '_blank' : undefined}
+   rel={isExternal ? 'noopener noreferrer' : undefined}
+   class:list={['inline-flex items-center gap-3', sizeClasses[size], variantClasses[variant], className]}>
+  {icon && (
+    <svg class="w-5 h-5 flex-shrink-0" viewBox="0 0 32 32" fill="none" aria-hidden="true">
+      <path d="M23.5 8.5A10.45 10.45 0 0 0 16 5.5C10.2 5.5 5.5 10.2 5.5 16c0 1.85.49 3.66 1.41 5.25L5.5 26.5l5.38-1.41A10.46 10.46 0 0 0 16 26.5c5.8 0 10.5-4.7 10.5-10.5 0-2.8-1.09-5.43-3-7.5Z" fill="white"/>
+    </svg>
+  )}
+  <span>{text}</span>
+</a>

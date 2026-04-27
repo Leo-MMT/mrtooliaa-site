@@ -1,0 +1,57 @@
+---
+/**
+ * SEOHead — Renders <head> content: meta, OG, Twitter, preloads, and JSON-LD.
+ * All JSON-LD is rendered from data so CSP hashes can be auto-computed.
+ */
+interface Props {
+  title: string;
+  description: string;
+  canonical: string;
+  themeColor: string;
+  ogImage?: string;
+  ogTitle?: string;
+  ogDescription?: string;
+  keywords?: string;
+  jsonLd?: Record<string, unknown>;
+  favicon?: string;
+}
+
+const {
+  title, description, canonical, themeColor,
+  ogImage, ogTitle, ogDescription, keywords,
+  jsonLd, favicon = '/assets/logo-mrtooliaa.png',
+} = Astro.props;
+---
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>{title}</title>
+  <meta name="description" content={description} />
+  {keywords && <meta name="keywords" content={keywords} />}
+  <link rel="canonical" href={canonical} />
+  <meta name="theme-color" content={themeColor} />
+
+  <!-- OpenGraph -->
+  <meta property="og:type" content="website" />
+  <meta property="og:url" content={canonical} />
+  <meta property="og:title" content={ogTitle ?? title} />
+  <meta property="og:description" content={ogDescription ?? description} />
+  {ogImage && <meta property="og:image" content={ogImage} />}
+  <meta property="og:locale" content="es_DO" />
+
+  <!-- Twitter -->
+  <meta name="twitter:card" content="summary_large_image" />
+  <meta name="twitter:title" content={ogTitle ?? title} />
+  <meta name="twitter:description" content={ogDescription ?? description} />
+  {ogImage && <meta name="twitter:image" content={ogImage} />}
+
+  <!-- Favicon -->
+  <link rel="icon" type="image/png" href={favicon} />
+  <link rel="apple-touch-icon" href={favicon} />
+
+  <!-- Inter font preload -->
+  <link rel="preload" href="/assets/fonts/inter-latin.woff2" as="font" type="font/woff2" crossorigin />
+
+  <!-- JSON-LD Structured Data -->
+  {jsonLd && <script type="application/ld+json" set:html={JSON.stringify(jsonLd)} />}
+</head>

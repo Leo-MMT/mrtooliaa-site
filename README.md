@@ -14,7 +14,7 @@ mrtooliaa.com/ferretquote/  → Landing Ferret-Quote Bot
 
 - HTML estático + Tailwind CSS **compilado** (sin CDN runtime)
 - Icons SVG inline (Lucide-style) en hot spots; emojis en zonas decorativas
-- Fuentes: Inter (Google Fonts, con `preconnect`)
+- Fuentes: Inter (self-hosted variable font en `assets/fonts/`)
 - Deploy: Cloudflare Pages (build step opcional — ver más abajo)
 
 ---
@@ -89,15 +89,24 @@ mrtooliaa-site/
 ├── ferretquote/
 │   └── index.html          ← Landing Ferret-Quote Bot
 ├── assets/
+│   ├── fonts/              ← Inter variable font (self-hosted)
+│   ├── js/main.js          ← JS mínimo (nav scroll + logo)
 │   ├── logo-*.png          ← Logos
 │   └── tailwind.css        ← CSS compilado (commited)
 ├── src/
-│   └── input.css           ← Fuente Tailwind (@tailwind directives)
+│   └── input.css           ← Fuente Tailwind (@tailwind directives + tokens)
 ├── tailwind.config.js      ← Colores, fonts, safelist
 ├── package.json            ← Scripts build/watch
 ├── _headers                ← CSP, HSTS, cache, security
+├── _redirects              ← Canonical URLs, trailing slash
 ├── sitemap.xml             ← SEO
 ├── robots.txt              ← SEO
+├── docs/                   ← Documentación técnica e informes
+│   ├── INFORME_SEGURIDAD.md
+│   ├── INFORME_REFACTOR.md
+│   └── design-system/      ← Handoff del design system (referencia)
+├── archive/                ← Material histórico
+│   └── MR ToolIAA Design System-handoff.zip
 └── README.md
 ```
 
@@ -107,12 +116,15 @@ mrtooliaa-site/
 
 El archivo `_headers` aplica (vía Cloudflare Pages):
 
-- **CSP** estricta (`default-src 'self'` con whitelist mínima de Google Fonts)
+- **CSP** estricta (`default-src 'self'`, `script-src 'self' + hashes SHA-256` para JSON-LD, `font-src 'self'`)
 - **HSTS** `max-age=31536000; includeSubDomains; preload`
 - `X-Frame-Options: DENY`, `X-Content-Type-Options: nosniff`
 - `Referrer-Policy: strict-origin-when-cross-origin`
 - `Permissions-Policy` restrictiva (cámara, micrófono, geo, FLoC desactivados)
+- `Cross-Origin-Opener-Policy: same-origin`, `Cross-Origin-Resource-Policy: same-origin`
 - Cache-Control diferenciado: immutable para assets, revalidate para HTML
+
+> **Nota sobre CSP:** Los bloques `<script type="application/ld+json">` están allowlisteados por hash SHA-256. Cualquier edición en estos bloques requiere regenerar los hashes. Ver `docs/INFORME_SEGURIDAD.md` §6.
 
 ---
 
@@ -129,11 +141,11 @@ El archivo `_headers` aplica (vía Cloudflare Pages):
 
 ## Roadmap — migración a Astro
 
-El sitio está estructurado para una migración futura a [Astro](https://astro.build) sin fricción:
+El sitio está en proceso de migración a [Astro](https://astro.build):
 
-1. **Componentes**: las 3 landings comparten navbar, footer y CTA WhatsApp — candidatos naturales a `<Nav />`, `<Footer />`, `<WhatsAppCTA />`.
-2. **Layouts**: un `BaseLayout.astro` puede envolver los `<head>` (OG, preconnect, CSP-compatible script tags).
-3. **Contenido**: textos de producto y features → YAML/TS data files → map en componentes.
+1. **Componentes**: las 3 landings comparten navbar, footer y CTA WhatsApp → `<Navbar />`, `<Footer />`, `<WhatsAppCTA />`.
+2. **Layouts**: un `BaseLayout.astro` envuelve los `<head>` (OG, preconnect, CSP-compatible script tags).
+3. **Contenido**: textos de producto y features → TS data files → map en componentes.
 4. **Tailwind**: ya está en v3 con config compartida — `@astrojs/tailwind` lo lee directamente.
 5. **Deploy**: CF Pages soporta Astro out-of-the-box — solo cambia build command a `npm run build`.
 

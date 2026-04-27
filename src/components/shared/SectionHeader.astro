@@ -1,0 +1,25 @@
+---
+/**
+ * SectionHeader — Reusable section header with eyebrow, title, and description.
+ */
+interface Props {
+  eyebrow?: string;
+  title: string;
+  titleAccent?: string;
+  description?: string;
+  class?: string;
+}
+
+const { eyebrow, title, titleAccent, description, class: className = '' } = Astro.props;
+---
+<div class:list={['text-center mb-14', className]}>
+  {eyebrow && (
+    <span class="text-brand-500 font-bold text-sm uppercase tracking-wider">{eyebrow}</span>
+  )}
+  <h2 class="text-3xl sm:text-4xl font-black text-navy-500 mt-2 mb-4">
+    {title} {titleAccent && <span class="text-brand-500">{titleAccent}</span>}
+  </h2>
+  {description && (
+    <p class="text-gray-500 text-lg max-w-xl mx-auto">{description}</p>
+  )}
+</div>

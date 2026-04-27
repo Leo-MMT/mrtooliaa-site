@@ -1,0 +1,95 @@
+---
+/**
+ * Footer — Shared footer for all landings with product links and contact info.
+ * Variant controls the visual theme to match each landing.
+ */
+import { site, waLink } from '@data/site';
+
+interface Props {
+  variant?: 'home' | 'mediturno' | 'ferretquote';
+}
+
+const { variant = 'home' } = Astro.props;
+
+const bgClass = variant === 'ferretquote' ? 'bg-black' : 'bg-navy-800';
+const products = [
+  { name: '🏥 MediTurno IA', href: '/mediturno/' },
+  { name: '🔩 Ferret-Quote Bot', href: '/ferretquote/' },
+  { name: '🤖 Agente Custom', href: '#' },
+];
+---
+<footer class:list={[bgClass, 'text-white py-14']}>
+  <div class="max-w-6xl mx-auto px-4 sm:px-6">
+    <div class="grid md:grid-cols-4 gap-10 mb-12">
+
+      <!-- Brand -->
+      <div class="md:col-span-2">
+        <div class="flex items-center gap-3 mb-4">
+          {variant === 'ferretquote' ? (
+            <Fragment>
+              <img src="/assets/logo-ferretquote-icon.png" alt="Ferret-Quote Bot" width="48" height="48" loading="lazy" decoding="async" class="h-12 w-auto" />
+              <div>
+                <span class="text-white font-black text-lg">Ferret-Quote</span>
+                <span class="text-brand-500 font-black text-lg"> Bot</span>
+              </div>
+            </Fragment>
+          ) : (
+            <img src="/assets/logo-mrtooliaa.png" alt="MR ToolIAA" width="140" height="48" loading="lazy" decoding="async" class="h-12 w-auto brightness-200" />
+          )}
+        </div>
+        <p class="text-white/50 leading-relaxed mb-3 max-w-sm">
+          {site.description}
+        </p>
+        <p class="text-white/35 text-sm leading-relaxed mb-5 max-w-sm">
+          {site.company.model} con base en {site.company.location}. Atendemos en todo RD y LATAM de forma remota.
+        </p>
+        <div class="flex items-center gap-3">
+          <a href={waLink()} target="_blank" rel="noopener noreferrer"
+             class="flex items-center gap-2 bg-green-600 hover:bg-green-700 text-white text-sm font-bold px-4 py-2 rounded-full transition-colors">
+            <span>📱</span> WhatsApp
+          </a>
+          <a href={`mailto:${site.email}`}
+             class="flex items-center gap-2 bg-white/10 hover:bg-white/20 text-white text-sm font-medium px-4 py-2 rounded-full transition-colors">
+            ✉️ Email
+          </a>
+        </div>
+      </div>
+
+      <!-- Products -->
+      <div>
+        <h4 class="font-bold text-sm uppercase tracking-wider text-white/40 mb-4">Productos</h4>
+        <ul class="space-y-2.5 text-white/65 text-sm">
+          {products.map((p) => (
+            <li><a href={p.href} class="hover:text-white transition-colors">{p.name}</a></li>
+          ))}
+        </ul>
+      </div>
+
+      <!-- Contact -->
+      <div>
+        <h4 class="font-bold text-sm uppercase tracking-wider text-white/40 mb-4">Contacto</h4>
+        <ul class="space-y-2.5 text-white/65 text-sm">
+          <li class="flex items-center gap-2">
+            <span>📱</span>
+            <a href={`https://wa.me/${site.phone.replace('+', '')}`} class="hover:text-white transition-colors">{site.phoneDisplay}</a>
+          </li>
+          <li class="flex items-center gap-2">
+            <span>✉️</span>
+            <a href={`mailto:${site.email}`} class="hover:text-white transition-colors">{site.email}</a>
+          </li>
+          <li class="flex items-center gap-2">
+            <span>🌐</span>
+            <span>100% digital · RD y LATAM</span>
+          </li>
+        </ul>
+      </div>
+    </div>
+
+    <div class="border-t border-white/10 pt-8 flex flex-col md:flex-row items-center justify-between gap-4">
+      <p class="text-white/30 text-sm">© {site.year} {site.company.legal}. Todos los derechos reservados.</p>
+      <p class="text-white/30 text-sm flex items-center gap-1">
+        Hecho con ❤️ en {site.company.location} 🇩🇴
+      </p>
+    </div>
+  </div>
+</footer>

@@ -1,0 +1,40 @@
+---
+/**
+ * BaseLayout — Wraps every page with <head>, navbar, footer, and WhatsApp float.
+ */
+import SEOHead from '@components/seo/SEOHead.astro';
+import Navbar from '@components/layout/Navbar.astro';
+import Footer from '@components/layout/Footer.astro';
+import WhatsAppFloat from '@components/shared/WhatsAppFloat.astro';
+import '@styles/global.css';
+
+interface Props {
+  seo: {
+    title: string;
+    description: string;
+    canonical: string;
+    themeColor: string;
+    ogImage?: string;
+    ogTitle?: string;
+    ogDescription?: string;
+    keywords?: string;
+    jsonLd?: Record<string, unknown>;
+    favicon?: string;
+  };
+  navVariant?: 'home' | 'mediturno' | 'ferretquote';
+  footerVariant?: 'home' | 'mediturno' | 'ferretquote';
+  waMessage?: string;
+}
+
+const { seo, navVariant = 'home', footerVariant = 'home', waMessage } = Astro.props;
+---
+<!DOCTYPE html>
+<html lang="es">
+<SEOHead {...seo} />
+<body class="font-sans text-gray-900 antialiased overflow-x-hidden">
+  <Navbar variant={navVariant} />
+  <slot />
+  <Footer variant={footerVariant} />
+  <WhatsAppFloat message={waMessage} />
+</body>
+</html>

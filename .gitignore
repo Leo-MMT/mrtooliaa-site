@@ -1,8 +1,18 @@
+# Dependencies
 node_modules/
-.DS_Store
-*.log
-.env
-.env.local
 
-# Contexto local para agentes de IA — no publicar
-_IA_CONTEXT.MD
+# Astro build output
+dist/
+.astro/
+
+# Environment
+.env
+.env.*
+
+# Editor
+.DS_Store
+*.swp
+.vscode/
+
+# Logs
+npm-debug.log*

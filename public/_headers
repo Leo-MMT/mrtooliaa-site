@@ -6,7 +6,7 @@
   Strict-Transport-Security: max-age=31536000; includeSubDomains; preload
   Cross-Origin-Opener-Policy: same-origin
   Cross-Origin-Resource-Policy: same-origin
-  Content-Security-Policy: default-src 'self'; script-src 'self' 'sha256-KhQvt2MC/0QlFyNruv0+cPrMHRVx/EBkHpfkmREsgvg=' 'sha256-NWMyw0W/DNP+SoQg8wgNpi55UcsJTRkzygZ7vreAuQE=' 'sha256-VacjrFqhICsdoRj96DP8Zr/mJ+CGh3KZ2a2IYBQRrYg='; style-src 'self' 'unsafe-inline'; font-src 'self'; img-src 'self' data:; connect-src 'self'; frame-ancestors 'none'; base-uri 'self'; form-action 'self' https://wa.me; upgrade-insecure-requests
+  Content-Security-Policy: default-src 'self'; script-src 'self' 'sha256-mmKs0rRV1zToaptAIJssTDVep9YRLHTFEmYgEr6KojI=' 'sha256-Ey9uRlVtuRo9ASYV7HLr9TWRQO7+9l1+UKkb2DAtEv0=' 'sha256-j7KNVbaAB6q2+ZbgHx5/87yb4GIjMH0p+RzPFPL5w8w='; style-src 'self' 'unsafe-inline'; font-src 'self'; img-src 'self' data:; connect-src 'self'; frame-ancestors 'none'; base-uri 'self'; form-action 'self' https://wa.me; upgrade-insecure-requests
 
 /assets/*
   Cache-Control: public, max-age=31536000, immutable
