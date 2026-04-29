@@ -21,7 +21,7 @@ export const site = {
   },
 
   logos: {
-    main: '/assets/logo-mrtooliaa.png',
+    main: '/assets/logo.webp',
     white: '/assets/logo-mrtooliaa-white.png',
     whiteSvg: '/assets/logo-mrtooliaa-white.svg',
     mono: '/assets/logo-mrtooliaa-mono.png',

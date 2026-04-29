@@ -11,7 +11,7 @@ export const mrtooliaa = {
     keywords: 'agentes IA, automatización empresarial, inteligencia artificial RD, WhatsApp bot, automatización dominicana, MR ToolIAA',
     canonical: `${site.domain}/`,
     themeColor: '#0d1a2d',
-    ogImage: `${site.domain}/assets/logo-mrtooliaa.png`,
+    ogImage: `${site.domain}/assets/logo.webp`,
     ogTitle: 'MR ToolIAA — Agentes IA como Servicio',
     ogDescription: 'Automatizamos lo repetitivo para que te enfoques en crecer. Agentes IA especializados para clínicas, ferreterías y cualquier negocio en RD.',
     twitterTitle: 'MR ToolIAA — Agentes IA como Servicio',
