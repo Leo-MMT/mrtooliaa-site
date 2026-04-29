@@ -1,11 +1,10 @@
 # =============================================================
-# Cloudflare Pages — redirect rules
+# Cloudflare Workers — redirect rules
 # Format: <from> <to> <status>
-# https://developers.cloudflare.com/pages/configuration/redirects/
+# NOTE: Only relative URLs are allowed (Cloudflare Workers limitation).
+# The www → apex redirect must be configured in the Cloudflare dashboard
+# under Bulk Redirects or DNS settings.
 # =============================================================
-
-# Force apex domain (www → mrtooliaa.com)
-https://www.mrtooliaa.com/*  https://mrtooliaa.com/:splat  301!
 
 # Hide raw index.html paths
 /index.html              /                301
